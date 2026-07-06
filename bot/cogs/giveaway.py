@@ -73,7 +73,7 @@ class GiveawayView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
 
-    @discord.ui.button(label="<a:ri_tada:1523620315325010092> Enter", style=discord.ButtonStyle.success, custom_id="giveaway:enter")
+    @discord.ui.button(label="Enter", emoji="<a:ri_tada:1523620315325010092>", style=discord.ButtonStyle.success, custom_id="giveaway:enter")
     async def enter(self, interaction: discord.Interaction, button: discord.ui.Button):
         data = load_json(GA_FILE)
         guild_id = str(interaction.guild.id)

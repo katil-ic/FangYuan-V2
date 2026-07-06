@@ -92,7 +92,7 @@ class TicketCloseView(discord.ui.View):
         file = discord.File(io.StringIO(transcript), filename=f"transcript-{interaction.channel.name}.txt")
         await interaction.followup.send(file=file, ephemeral=True)
 
-    @discord.ui.button(label="<a:pink_arrow_haveli:1523620310124068985> Add User", style=discord.ButtonStyle.primary, custom_id="ticket:adduser")
+    @discord.ui.button(label="Add User", emoji="<a:pink_arrow_haveli:1523620310124068985>", style=discord.ButtonStyle.primary, custom_id="ticket:adduser")
     async def add_user(self, interaction: discord.Interaction, button: discord.ui.Button):
         if not interaction.user.guild_permissions.manage_channels:
             return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Staff only.", ephemeral=True)
