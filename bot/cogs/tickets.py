@@ -20,7 +20,7 @@ class TicketCloseView(discord.ui.View):
         super().__init__(timeout=None)
         self.bot = bot
 
-    @discord.ui.button(label="<:ownerinfo:1480905030713212938> Close Ticket", style=discord.ButtonStyle.danger, custom_id="ticket:close")
+    @discord.ui.button(label="<:ownerinfo:1523725199457910884> Close Ticket", style=discord.ButtonStyle.danger, custom_id="ticket:close")
     async def close_ticket(self, interaction: discord.Interaction, button: discord.ui.Button):
         cfg = load_json(TICKET_CONFIG_FILE)
         guild_id = str(interaction.guild.id)
@@ -35,7 +35,7 @@ class TicketCloseView(discord.ui.View):
         if not is_staff and not is_owner:
             return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Only staff or the ticket owner can close this.", ephemeral=True)
 
-        await interaction.response.send_message(embed=make_embed("<:ownerinfo:1480905030713212938> Closing ticket in 5 seconds...", 0xED4245))
+        await interaction.response.send_message(embed=make_embed("<:ownerinfo:1523725199457910884> Closing ticket in 5 seconds...", 0xED4245))
         await asyncio.sleep(5)
 
         # Save transcript
@@ -55,7 +55,7 @@ class TicketCloseView(discord.ui.View):
             if log_channel:
                 file = discord.File(io.StringIO(transcript), filename=f"transcript-{interaction.channel.name}.txt")
                 embed = discord.Embed(
-                    title="<:ownerinfo:1480905030713212938> Ticket Transcript",
+                    title="<:ownerinfo:1523725199457910884> Ticket Transcript",
                     description=f"**Channel:** {interaction.channel.name}\n**Closed by:** {interaction.user.mention}\n**Owner:** <@{ticket_data.get('user_id')}>",
                     color=0x5865F2,
                     timestamp=datetime.utcnow()
@@ -67,7 +67,7 @@ class TicketCloseView(discord.ui.View):
             user = await interaction.guild.fetch_member(int(ticket_data.get("user_id")))
             file2 = discord.File(io.StringIO(transcript), filename=f"transcript-{interaction.channel.name}.txt")
             await user.send(
-                embed=make_embed(f"<:ownerinfo:1480905030713212938> Your ticket in **{interaction.guild.name}** has been closed. Transcript attached.", 0x5865F2),
+                embed=make_embed(f"<:ownerinfo:1523725199457910884> Your ticket in **{interaction.guild.name}** has been closed. Transcript attached.", 0x5865F2),
                 file=file2
             )
         except Exception:
@@ -79,7 +79,7 @@ class TicketCloseView(discord.ui.View):
 
         await interaction.channel.delete(reason=f"Ticket closed by {interaction.user}")
 
-    @discord.ui.button(label="<:ownerinfo:1480905030713212938> Transcript", style=discord.ButtonStyle.secondary, custom_id="ticket:transcript")
+    @discord.ui.button(label="<:ownerinfo:1523725199457910884> Transcript", style=discord.ButtonStyle.secondary, custom_id="ticket:transcript")
     async def get_transcript(self, interaction: discord.Interaction, button: discord.ui.Button):
         if not interaction.user.guild_permissions.manage_channels:
             return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Staff only.", ephemeral=True)
@@ -116,7 +116,7 @@ class TicketOpenView(discord.ui.View):
         self.bot = bot
         self.category_id = category_id
 
-    @discord.ui.button(label="<a:tickets1:1418334460285419541> Open Ticket", style=discord.ButtonStyle.primary, custom_id="ticket:open")
+    @discord.ui.button(label="<a:tickets1:1523725201756655626> Open Ticket", style=discord.ButtonStyle.primary, custom_id="ticket:open")
     async def open_ticket(self, interaction: discord.Interaction, button: discord.ui.Button):
         guild = interaction.guild
         cfg = load_json(TICKET_CONFIG_FILE)
@@ -175,7 +175,7 @@ class TicketOpenView(discord.ui.View):
 
         # Send opening message
         embed = discord.Embed(
-            title=f"<a:tickets1:1418334460285419541> Ticket #{ticket_num:04d}",
+            title=f"<a:tickets1:1523725201756655626> Ticket #{ticket_num:04d}",
             description=(
                 f"Welcome {interaction.user.mention}!\n\n"
                 f"Support staff will be with you shortly. Please describe your issue in detail.\n\n"
@@ -204,7 +204,7 @@ class Tickets(commands.Cog):
     async def ticketpanel(self, ctx, *, title: str = "Support Tickets"):
         """Send the ticket panel."""
         embed = discord.Embed(
-            title=f"<a:tickets1:1418334460285419541> {title}",
+            title=f"<a:tickets1:1523725201756655626> {title}",
             description=(
                 "Need help? Click the button below to open a support ticket.\n\n"
                 "**Before opening a ticket:**\n"
@@ -271,7 +271,7 @@ class Tickets(commands.Cog):
         g_cfg = cfg.get(guild_id, {})
         total = g_cfg.get("ticket_count", 0)
         open_count = len(g_cfg.get("open_tickets", {}))
-        embed = discord.Embed(title="<a:tickets1:1418334460285419541> Ticket Statistics", color=0x5865F2)
+        embed = discord.Embed(title="<a:tickets1:1523725201756655626> Ticket Statistics", color=0x5865F2)
         embed.add_field(name="Total Tickets", value=str(total), inline=True)
         embed.add_field(name="Open Tickets", value=str(open_count), inline=True)
         embed.add_field(name="Closed Tickets", value=str(total - open_count), inline=True)

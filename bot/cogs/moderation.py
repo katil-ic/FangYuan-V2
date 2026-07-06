@@ -80,7 +80,7 @@ class Moderation(commands.Cog):
         except Exception:
             pass
         await member.kick(reason=f"{ctx.author}: {reason}")
-        await ctx.send(embed=make_embed(f"<:ownerinfo:1480905030713212938> **{member}** has been kicked.\nReason: {reason}", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<:ownerinfo:1523725199457910884> **{member}** has been kicked.\nReason: {reason}", self.bot.success_color))
         await self._log(ctx.guild, "Kick", ctx.author, member, reason)
 
     # ─── MUTE / TIMEOUT ───────────────────────────────────────────────────────
@@ -94,7 +94,7 @@ class Moderation(commands.Cog):
             return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid duration. Use e.g. `1d`, `2h`, `30m`", self.bot.error_color))
         until = datetime.now(timezone.utc) + timedelta(seconds=seconds)
         await member.timeout(until, reason=f"{ctx.author}: {reason}")
-        await ctx.send(embed=make_embed(f"<:ownerinfo:1480905030713212938> **{member}** has been muted for `{duration}`.\nReason: {reason}", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<:ownerinfo:1523725199457910884> **{member}** has been muted for `{duration}`.\nReason: {reason}", self.bot.success_color))
         await self._log(ctx.guild, "Mute", ctx.author, member, reason, extra=f"Duration: {duration}")
 
     @commands.hybrid_command(name="unmute", aliases=["untimeout"])
@@ -102,7 +102,7 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(moderate_members=True)
     async def unmute(self, ctx, member: discord.Member, *, reason="No reason provided"):
         await member.timeout(None, reason=f"{ctx.author}: {reason}")
-        await ctx.send(embed=make_embed(f"<:ownerinfo:1480905030713212938> **{member}** has been unmuted.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<:ownerinfo:1523725199457910884> **{member}** has been unmuted.", self.bot.success_color))
 
     # ─── WARN ─────────────────────────────────────────────────────────────────
 
@@ -125,12 +125,12 @@ class Moderation(commands.Cog):
         count = len(warns[guild_id][user_id])
         try:
             await member.send(embed=make_embed(
-                f"<:ownerinfo:1480905030713212938> You have been **warned** in **{ctx.guild.name}**.\nReason: {reason}\nTotal Warnings: {count}",
+                f"<:ownerinfo:1523725199457910884> You have been **warned** in **{ctx.guild.name}**.\nReason: {reason}\nTotal Warnings: {count}",
                 self.bot.warning_color
             ))
         except Exception:
             pass
-        await ctx.send(embed=make_embed(f"<:ownerinfo:1480905030713212938> **{member}** has been warned. (Total: **{count}**)\nReason: {reason}", self.bot.warning_color))
+        await ctx.send(embed=make_embed(f"<:ownerinfo:1523725199457910884> **{member}** has been warned. (Total: **{count}**)\nReason: {reason}", self.bot.warning_color))
         await self._log(ctx.guild, "Warn", ctx.author, member, reason, extra=f"Total Warnings: {count}")
 
     @commands.hybrid_command(name="warnings", aliases=["warns", "warnlist"])
@@ -143,7 +143,7 @@ class Moderation(commands.Cog):
         if not user_warns:
             return await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> **{member}** has no warnings.", self.bot.success_color))
         embed = discord.Embed(
-            title=f"<:ownerinfo:1480905030713212938> Warnings for {member}",
+            title=f"<:ownerinfo:1523725199457910884> Warnings for {member}",
             color=self.bot.warning_color,
             timestamp=datetime.utcnow()
         )
@@ -187,7 +187,7 @@ class Moderation(commands.Cog):
             deleted = deleted[:amount]
         else:
             deleted = await ctx.channel.purge(limit=amount)
-        msg = await ctx.send(embed=make_embed(f"<:ownerinfo:1480905030713212938> Deleted **{len(deleted)}** messages.", self.bot.success_color))
+        msg = await ctx.send(embed=make_embed(f"<:ownerinfo:1523725199457910884> Deleted **{len(deleted)}** messages.", self.bot.success_color))
         await asyncio.sleep(4)
         await msg.delete()
 
@@ -201,7 +201,7 @@ class Moderation(commands.Cog):
         overwrite = channel.overwrites_for(ctx.guild.default_role)
         overwrite.send_messages = False
         await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
-        await ctx.send(embed=make_embed(f"<:ownerinfo:1480905030713212938> **{channel.mention}** has been locked.\nReason: {reason}", self.bot.error_color))
+        await ctx.send(embed=make_embed(f"<:ownerinfo:1523725199457910884> **{channel.mention}** has been locked.\nReason: {reason}", self.bot.error_color))
 
     @commands.hybrid_command(name="unlock")
     @commands.has_permissions(manage_channels=True)
@@ -211,7 +211,7 @@ class Moderation(commands.Cog):
         overwrite = channel.overwrites_for(ctx.guild.default_role)
         overwrite.send_messages = None
         await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
-        await ctx.send(embed=make_embed(f"<:ownerinfo:1480905030713212938> **{channel.mention}** has been unlocked.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<:ownerinfo:1523725199457910884> **{channel.mention}** has been unlocked.", self.bot.success_color))
 
     @commands.hybrid_command(name="lockall")
     @commands.has_permissions(administrator=True)
@@ -226,7 +226,7 @@ class Moderation(commands.Cog):
                 locked += 1
             except Exception:
                 pass
-        await ctx.send(embed=make_embed(f"<:ownerinfo:1480905030713212938> Locked **{locked}** channels.\nReason: {reason}", self.bot.error_color))
+        await ctx.send(embed=make_embed(f"<:ownerinfo:1523725199457910884> Locked **{locked}** channels.\nReason: {reason}", self.bot.error_color))
 
     # ─── SLOWMODE ─────────────────────────────────────────────────────────────
 
@@ -286,7 +286,7 @@ class Moderation(commands.Cog):
         new_channel = await channel.clone(reason=f"Nuked by {ctx.author}")
         await new_channel.edit(position=pos)
         await channel.delete(reason=f"Nuked by {ctx.author}")
-        await new_channel.send(embed=make_embed(f"<:ownerinfo:1480905030713212938> Channel nuked by **{ctx.author}**.", self.bot.error_color))
+        await new_channel.send(embed=make_embed(f"<:ownerinfo:1523725199457910884> Channel nuked by **{ctx.author}**.", self.bot.error_color))
 
     # ─── MODLOG ───────────────────────────────────────────────────────────────
 

@@ -125,7 +125,7 @@ class FangYuan(commands.Bot):
             return
         if isinstance(error, commands.CommandOnCooldown):
             embed = discord.Embed(
-                description=f"<:ownerinfo:1480905030713212938> Command on cooldown. Try again in `{error.retry_after:.1f}s`",
+                description=f"<:ownerinfo:1523725199457910884> Command on cooldown. Try again in `{error.retry_after:.1f}s`",
                 color=self.warning_color
             )
             await ctx.send(embed=embed, delete_after=5)

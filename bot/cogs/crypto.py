@@ -55,7 +55,7 @@ class Crypto(commands.Cog):
         """
         if not address:
             embed = discord.Embed(
-                title="<:ownerinfo:1480905030713212938> .ball — Crypto Address Checker",
+                title="<:ownerinfo:1523725199457910884> .ball — Crypto Address Checker",
                 description=(
                     "**Usage:** `.ball <address> [chain]`\n\n"
                     "**Supported chains:** `eth` `btc` `bsc` `matic`\n\n"
@@ -108,7 +108,7 @@ class Crypto(commands.Cog):
                 if data.get("status") != "1" and data.get("message") != "No transactions found":
                     if data.get("result") and "Invalid API Key" in str(data.get("result")):
                         await ctx.send(embed=make_embed(
-                            f"<:ownerinfo:1480905030713212938> Etherscan/BscScan/PolygonScan API key not configured or invalid.\n"
+                            f"<:ownerinfo:1523725199457910884> Etherscan/BscScan/PolygonScan API key not configured or invalid.\n"
                             f"Set `ETHERSCAN_API_KEY` in your `.env` file.",
                             self.bot.warning_color
                         ))
@@ -188,45 +188,45 @@ class Crypto(commands.Cog):
 
                 # Build embed
                 embed = discord.Embed(
-                    title=f"<:ownerinfo:1480905030713212938> .ball — {symbol} Address Analysis",
+                    title=f"<:ownerinfo:1523725199457910884> .ball — {symbol} Address Analysis",
                     color=0xF0A500,
                     timestamp=now
                 )
                 embed.set_thumbnail(url=self._chain_icon(symbol))
 
                 short_addr = f"{address[:8]}...{address[-6:]}"
-                embed.add_field(name="<:ownerinfo:1480905030713212938> Address", value=f"`{short_addr}`", inline=False)
+                embed.add_field(name="<:ownerinfo:1523725199457910884> Address", value=f"`{short_addr}`", inline=False)
 
                 # Last 1 hour
                 embed.add_field(
-                    name="<:ownerinfo:1480905030713212938> Last 1 Hour",
+                    name="<:ownerinfo:1523725199457910884> Last 1 Hour",
                     value=(
-                        f"<:ownerinfo:1480905030713212938> **Received:** {format_crypto(wei_to_eth(received_1h), symbol)}"
+                        f"<:ownerinfo:1523725199457910884> **Received:** {format_crypto(wei_to_eth(received_1h), symbol)}"
                         + (f" ≈ ${wei_to_eth(received_1h) * usd_price:,.2f}" if usd_price else "")
-                        + f"\n<:ownerinfo:1480905030713212938> **Sent:** {format_crypto(wei_to_eth(sent_1h), symbol)}"
-                        + f"\n<:ownerinfo:1480905030713212938> **Gas Fees:** {format_crypto(wei_to_eth(gas_fees_1h), symbol)}"
-                        + f"\n<a:Poll:1345032786876305438> **Transactions:** {len(recent_txs)}"
+                        + f"\n<:ownerinfo:1523725199457910884> **Sent:** {format_crypto(wei_to_eth(sent_1h), symbol)}"
+                        + f"\n<:ownerinfo:1523725199457910884> **Gas Fees:** {format_crypto(wei_to_eth(gas_fees_1h), symbol)}"
+                        + f"\n<a:Poll:1523725207846781071> **Transactions:** {len(recent_txs)}"
                     ),
                     inline=False
                 )
 
                 embed.add_field(
-                    name="<:ownerinfo:1480905030713212938> Pending (Internal, 1h)",
-                    value=f"<:ownerinfo:1480905030713212938> {format_crypto(wei_to_eth(pending_received), symbol)}"
+                    name="<:ownerinfo:1523725199457910884> Pending (Internal, 1h)",
+                    value=f"<:ownerinfo:1523725199457910884> {format_crypto(wei_to_eth(pending_received), symbol)}"
                     + (f" ≈ ${wei_to_eth(pending_received) * usd_price:,.2f}" if usd_price else ""),
                     inline=False
                 )
 
                 # All-time
                 embed.add_field(
-                    name="<a:Poll:1345032786876305438> All-Time Totals",
+                    name="<a:Poll:1523725207846781071> All-Time Totals",
                     value=(
                         f"<a:tick:1523383850749792397> **Total Received:** {format_crypto(wei_to_eth(all_received), symbol)}"
                         + (f" ≈ ${wei_to_eth(all_received) * usd_price:,.2f}" if usd_price else "")
                         + f"\n<:x_leo_money:1523386970557120532> **Total Spent:** {format_crypto(wei_to_eth(all_sent), symbol)}"
                         + f"\n<:x_leo_money:1523386970557120532> **Current Balance:** {format_crypto(wei_to_eth(balance), symbol)}"
                         + (f" ≈ ${wei_to_eth(balance) * usd_price:,.2f}" if usd_price else "")
-                        + f"\n<:ownerinfo:1480905030713212938> **Total TXs:** {len(txs)}"
+                        + f"\n<:ownerinfo:1523725199457910884> **Total TXs:** {len(txs)}"
                     ),
                     inline=False
                 )
@@ -237,7 +237,7 @@ class Crypto(commands.Cog):
                     "MATIC": f"https://polygonscan.com/address/{address}",
                 }.get(symbol, "")
                 if explorer_url:
-                    embed.add_field(name="<:ownerinfo:1480905030713212938> Explorer", value=f"[View on Explorer]({explorer_url})", inline=False)
+                    embed.add_field(name="<:ownerinfo:1523725199457910884> Explorer", value=f"[View on Explorer]({explorer_url})", inline=False)
 
                 embed.set_footer(text="FangYuan V2 Crypto • Data via blockchain explorers")
                 await ctx.send(embed=embed)
@@ -297,48 +297,48 @@ class Crypto(commands.Cog):
                 usd_price = await self._get_price(session, "BTC")
 
                 embed = discord.Embed(
-                    title="<:ownerinfo:1480905030713212938> .ball — BTC Address Analysis",
+                    title="<:ownerinfo:1523725199457910884> .ball — BTC Address Analysis",
                     color=0xF7931A,
                     timestamp=now
                 )
                 embed.set_thumbnail(url="https://bitcoin.org/img/icons/opengraph.png")
 
                 short_addr = f"{address[:8]}...{address[-6:]}"
-                embed.add_field(name="<:ownerinfo:1480905030713212938> Address", value=f"`{short_addr}`", inline=False)
+                embed.add_field(name="<:ownerinfo:1523725199457910884> Address", value=f"`{short_addr}`", inline=False)
 
                 embed.add_field(
-                    name="<:ownerinfo:1480905030713212938> Last 1 Hour",
+                    name="<:ownerinfo:1523725199457910884> Last 1 Hour",
                     value=(
-                        f"<:ownerinfo:1480905030713212938> **Received:** {format_crypto(satoshi_to_btc(recent_received), 'BTC')}"
+                        f"<:ownerinfo:1523725199457910884> **Received:** {format_crypto(satoshi_to_btc(recent_received), 'BTC')}"
                         + (f" ≈ ${satoshi_to_btc(recent_received) * usd_price:,.2f}" if usd_price else "")
-                        + f"\n<:ownerinfo:1480905030713212938> **Sent:** {format_crypto(satoshi_to_btc(recent_sent), 'BTC')}"
-                        + f"\n<a:Poll:1345032786876305438> **Transactions:** {recent_tx_count}"
+                        + f"\n<:ownerinfo:1523725199457910884> **Sent:** {format_crypto(satoshi_to_btc(recent_sent), 'BTC')}"
+                        + f"\n<a:Poll:1523725207846781071> **Transactions:** {recent_tx_count}"
                     ),
                     inline=False
                 )
 
                 embed.add_field(
-                    name="<:ownerinfo:1480905030713212938> Pending (Unconfirmed)",
-                    value=f"<:ownerinfo:1480905030713212938> {format_crypto(satoshi_to_btc(pending_received), 'BTC')}"
+                    name="<:ownerinfo:1523725199457910884> Pending (Unconfirmed)",
+                    value=f"<:ownerinfo:1523725199457910884> {format_crypto(satoshi_to_btc(pending_received), 'BTC')}"
                     + (f" ≈ ${satoshi_to_btc(pending_received) * usd_price:,.2f}" if usd_price else ""),
                     inline=False
                 )
 
                 embed.add_field(
-                    name="<a:Poll:1345032786876305438> All-Time Totals",
+                    name="<a:Poll:1523725207846781071> All-Time Totals",
                     value=(
                         f"<a:tick:1523383850749792397> **Total Received:** {format_crypto(satoshi_to_btc(total_received), 'BTC')}"
                         + (f" ≈ ${satoshi_to_btc(total_received) * usd_price:,.2f}" if usd_price else "")
                         + f"\n<:x_leo_money:1523386970557120532> **Total Spent:** {format_crypto(satoshi_to_btc(total_sent), 'BTC')}"
                         + f"\n<:x_leo_money:1523386970557120532> **Current Balance:** {format_crypto(satoshi_to_btc(balance), 'BTC')}"
                         + (f" ≈ ${satoshi_to_btc(balance) * usd_price:,.2f}" if usd_price else "")
-                        + f"\n<:ownerinfo:1480905030713212938> **Total TXs:** {n_tx}"
+                        + f"\n<:ownerinfo:1523725199457910884> **Total TXs:** {n_tx}"
                     ),
                     inline=False
                 )
 
                 embed.add_field(
-                    name="<:ownerinfo:1480905030713212938> Explorer",
+                    name="<:ownerinfo:1523725199457910884> Explorer",
                     value=f"[View on Blockchain.com](https://blockchain.com/btc/address/{address})",
                     inline=False
                 )
@@ -380,7 +380,7 @@ class Crypto(commands.Cog):
                 icon = data.get("image", {}).get("small")
 
                 color = 0x57F287 if change_24h >= 0 else 0xED4245
-                arrow = "<a:Poll:1345032786876305438>" if change_24h >= 0 else "<a:Poll:1345032786876305438>"
+                arrow = "<a:Poll:1523725207846781071>" if change_24h >= 0 else "<a:Poll:1523725207846781071>"
 
                 embed = discord.Embed(
                     title=f"{arrow} {name} ({sym})",
@@ -392,13 +392,13 @@ class Crypto(commands.Cog):
                     embed.set_thumbnail(url=icon)
 
                 embed.add_field(name="<:x_leo_money:1523386970557120532> Price", value=f"${price:,.4f}", inline=True)
-                embed.add_field(name="<a:Poll:1345032786876305438> Rank", value=f"#{rank}", inline=True)
-                embed.add_field(name="<a:Poll:1345032786876305438> 24h Change", value=f"{change_24h:+.2f}%", inline=True)
-                embed.add_field(name="<a:Poll:1345032786876305438> 7d Change", value=f"{change_7d:+.2f}%", inline=True)
-                embed.add_field(name="<:ownerinfo:1480905030713212938> 24h High", value=f"${high_24h:,.4f}", inline=True)
-                embed.add_field(name="<:ownerinfo:1480905030713212938> 24h Low", value=f"${low_24h:,.4f}", inline=True)
+                embed.add_field(name="<a:Poll:1523725207846781071> Rank", value=f"#{rank}", inline=True)
+                embed.add_field(name="<a:Poll:1523725207846781071> 24h Change", value=f"{change_24h:+.2f}%", inline=True)
+                embed.add_field(name="<a:Poll:1523725207846781071> 7d Change", value=f"{change_7d:+.2f}%", inline=True)
+                embed.add_field(name="<:ownerinfo:1523725199457910884> 24h High", value=f"${high_24h:,.4f}", inline=True)
+                embed.add_field(name="<:ownerinfo:1523725199457910884> 24h Low", value=f"${low_24h:,.4f}", inline=True)
                 embed.add_field(name="<:x_leo_money:1523386970557120532> Market Cap", value=f"${mkt_cap:,.0f}", inline=True)
-                embed.add_field(name="<:ownerinfo:1480905030713212938> 24h Volume", value=f"${volume:,.0f}", inline=True)
+                embed.add_field(name="<:ownerinfo:1523725199457910884> 24h Volume", value=f"${volume:,.0f}", inline=True)
                 embed.add_field(name="<a:rizz_rewards:1523620313689100320> All-Time High", value=f"${ath:,.4f}", inline=True)
                 embed.set_footer(text="FangYuan V2 Crypto • Powered by CoinGecko")
                 await ctx.send(embed=embed)
@@ -459,7 +459,7 @@ class Crypto(commands.Cog):
                 lines = []
                 for coin in coins:
                     change = coin.get("price_change_percentage_24h", 0) or 0
-                    arrow = "<a:online:1523383854226870423>" if change >= 0 else "<:ownerinfo:1480905030713212938>"
+                    arrow = "<a:online:1523383854226870423>" if change >= 0 else "<:ownerinfo:1523725199457910884>"
                     lines.append(
                         f"**#{coin['market_cap_rank']}** {arrow} **{coin['name']}** ({coin['symbol'].upper()}) — "
                         f"${coin['current_price']:,.4f} | {change:+.2f}%"
@@ -475,7 +475,7 @@ class Crypto(commands.Cog):
     async def gasfee(self, ctx):
         """Check current ETH gas fees."""
         if not ETHERSCAN_KEY:
-            return await ctx.send(embed=make_embed("<:ownerinfo:1480905030713212938> Etherscan API key not set. Add `ETHERSCAN_API_KEY` to `.env`.", self.bot.warning_color))
+            return await ctx.send(embed=make_embed("<:ownerinfo:1523725199457910884> Etherscan API key not set. Add `ETHERSCAN_API_KEY` to `.env`.", self.bot.warning_color))
         async with aiohttp.ClientSession() as session:
             try:
                 async with session.get(
@@ -489,13 +489,13 @@ class Crypto(commands.Cog):
 
                 result = data["result"]
                 embed = discord.Embed(
-                    title="<:ownerinfo:1480905030713212938> Ethereum Gas Fees",
+                    title="<:ownerinfo:1523725199457910884> Ethereum Gas Fees",
                     color=0x627EEA,
                     timestamp=datetime.utcnow()
                 )
                 embed.add_field(name="<a:online:1523383854226870423> Low (Safe)", value=f"{result['SafeGasPrice']} Gwei", inline=True)
-                embed.add_field(name="<:ownerinfo:1480905030713212938> Average", value=f"{result['ProposeGasPrice']} Gwei", inline=True)
-                embed.add_field(name="<:ownerinfo:1480905030713212938> Fast", value=f"{result['FastGasPrice']} Gwei", inline=True)
+                embed.add_field(name="<:ownerinfo:1523725199457910884> Average", value=f"{result['ProposeGasPrice']} Gwei", inline=True)
+                embed.add_field(name="<:ownerinfo:1523725199457910884> Fast", value=f"{result['FastGasPrice']} Gwei", inline=True)
                 embed.set_footer(text="FangYuan V2 Crypto • Powered by Etherscan")
                 await ctx.send(embed=embed)
 

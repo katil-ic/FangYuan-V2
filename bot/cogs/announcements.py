@@ -92,7 +92,7 @@ class Announcements(commands.Cog):
     async def broadcast(self, ctx, *, message: str):
         """Broadcast a message to ALL text channels the bot can send to."""
         confirm_embed = discord.Embed(
-            title="<:ownerinfo:1480905030713212938> Broadcast Confirmation",
+            title="<:ownerinfo:1523725199457910884> Broadcast Confirmation",
             description=f"This will send the following message to **all {len(ctx.guild.text_channels)}** text channels.\n\n>>> {message}\n\nReact with <a:tick:1523383850749792397> to confirm or <:Xieron_stolen_emoji_1774597520:1520895245733204039> to cancel.",
             color=self.bot.warning_color
         )
@@ -167,7 +167,7 @@ class Announcements(commands.Cog):
         """Send a formatted changelog/update announcement."""
         items = [c.strip() for c in changes.split("|") if c.strip()]
         embed = discord.Embed(
-            title=f"<:ownerinfo:1480905030713212938> Update — v{version}",
+            title=f"<:ownerinfo:1523725199457910884> Update — v{version}",
             color=0x57F287,
             timestamp=datetime.utcnow()
         )
