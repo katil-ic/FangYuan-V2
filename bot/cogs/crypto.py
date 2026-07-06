@@ -81,7 +81,7 @@ class Crypto(commands.Cog):
             elif chain in ("matic", "polygon"):
                 await self._ball_eth(ctx, address, "MATIC", "https://api.polygonscan.com/api", POLYGONSCAN_KEY)
             else:
-                await ctx.send(embed=make_embed(f"❌ Unknown chain `{chain}`. Use: `eth`, `btc`, `bsc`, `matic`.", self.bot.error_color))
+                await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Unknown chain `{chain}`. Use: `eth`, `btc`, `bsc`, `matic`.", self.bot.error_color))
 
     async def _ball_eth(self, ctx, address: str, symbol: str, api_url: str, api_key: str):
         now = datetime.now(timezone.utc)
@@ -221,10 +221,10 @@ class Crypto(commands.Cog):
                 embed.add_field(
                     name="📈 All-Time Totals",
                     value=(
-                        f"✅ **Total Received:** {format_crypto(wei_to_eth(all_received), symbol)}"
+                        f"<a:tick:1523383850749792397> **Total Received:** {format_crypto(wei_to_eth(all_received), symbol)}"
                         + (f" ≈ ${wei_to_eth(all_received) * usd_price:,.2f}" if usd_price else "")
-                        + f"\n💸 **Total Spent:** {format_crypto(wei_to_eth(all_sent), symbol)}"
-                        + f"\n💰 **Current Balance:** {format_crypto(wei_to_eth(balance), symbol)}"
+                        + f"\n<:x_leo_money:1523386970557120532> **Total Spent:** {format_crypto(wei_to_eth(all_sent), symbol)}"
+                        + f"\n<:x_leo_money:1523386970557120532> **Current Balance:** {format_crypto(wei_to_eth(balance), symbol)}"
                         + (f" ≈ ${wei_to_eth(balance) * usd_price:,.2f}" if usd_price else "")
                         + f"\n📋 **Total TXs:** {len(txs)}"
                     ),
@@ -243,9 +243,9 @@ class Crypto(commands.Cog):
                 await ctx.send(embed=embed)
 
             except aiohttp.ClientError as e:
-                await ctx.send(embed=make_embed(f"❌ Network error: {e}", self.bot.error_color))
+                await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Network error: {e}", self.bot.error_color))
             except Exception as e:
-                await ctx.send(embed=make_embed(f"❌ Error fetching data: {e}", self.bot.error_color))
+                await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Error fetching data: {e}", self.bot.error_color))
 
     async def _ball_btc(self, ctx, address: str):
         now = datetime.now(timezone.utc)
@@ -255,7 +255,7 @@ class Crypto(commands.Cog):
             try:
                 async with session.get(f"https://blockchain.info/rawaddr/{address}?limit=200") as resp:
                     if resp.status != 200:
-                        return await ctx.send(embed=make_embed(f"❌ Invalid BTC address or API error (status {resp.status}).", self.bot.error_color))
+                        return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid BTC address or API error (status {resp.status}).", self.bot.error_color))
                     data = await resp.json()
 
                 txs = data.get("txs", [])
@@ -327,10 +327,10 @@ class Crypto(commands.Cog):
                 embed.add_field(
                     name="📈 All-Time Totals",
                     value=(
-                        f"✅ **Total Received:** {format_crypto(satoshi_to_btc(total_received), 'BTC')}"
+                        f"<a:tick:1523383850749792397> **Total Received:** {format_crypto(satoshi_to_btc(total_received), 'BTC')}"
                         + (f" ≈ ${satoshi_to_btc(total_received) * usd_price:,.2f}" if usd_price else "")
-                        + f"\n💸 **Total Spent:** {format_crypto(satoshi_to_btc(total_sent), 'BTC')}"
-                        + f"\n💰 **Current Balance:** {format_crypto(satoshi_to_btc(balance), 'BTC')}"
+                        + f"\n<:x_leo_money:1523386970557120532> **Total Spent:** {format_crypto(satoshi_to_btc(total_sent), 'BTC')}"
+                        + f"\n<:x_leo_money:1523386970557120532> **Current Balance:** {format_crypto(satoshi_to_btc(balance), 'BTC')}"
                         + (f" ≈ ${satoshi_to_btc(balance) * usd_price:,.2f}" if usd_price else "")
                         + f"\n📋 **Total TXs:** {n_tx}"
                     ),
@@ -346,9 +346,9 @@ class Crypto(commands.Cog):
                 await ctx.send(embed=embed)
 
             except aiohttp.ClientError as e:
-                await ctx.send(embed=make_embed(f"❌ Network error: {e}", self.bot.error_color))
+                await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Network error: {e}", self.bot.error_color))
             except Exception as e:
-                await ctx.send(embed=make_embed(f"❌ Error fetching BTC data: {e}", self.bot.error_color))
+                await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Error fetching BTC data: {e}", self.bot.error_color))
 
     # ─── GENERAL CRYPTO COMMANDS ──────────────────────────────────────────────
 
@@ -362,7 +362,7 @@ class Crypto(commands.Cog):
                     params={"localization": "false", "tickers": "false", "community_data": "false", "developer_data": "false"}
                 ) as resp:
                     if resp.status == 404:
-                        return await ctx.send(embed=make_embed(f"❌ Coin `{symbol}` not found. Try the full name like `bitcoin`, `ethereum`.", self.bot.error_color))
+                        return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Coin `{symbol}` not found. Try the full name like `bitcoin`, `ethereum`.", self.bot.error_color))
                     data = await resp.json()
 
                 mkt = data.get("market_data", {})
@@ -391,20 +391,20 @@ class Crypto(commands.Cog):
                 if icon:
                     embed.set_thumbnail(url=icon)
 
-                embed.add_field(name="💵 Price", value=f"${price:,.4f}", inline=True)
+                embed.add_field(name="<:x_leo_money:1523386970557120532> Price", value=f"${price:,.4f}", inline=True)
                 embed.add_field(name="📊 Rank", value=f"#{rank}", inline=True)
                 embed.add_field(name="📈 24h Change", value=f"{change_24h:+.2f}%", inline=True)
                 embed.add_field(name="📈 7d Change", value=f"{change_7d:+.2f}%", inline=True)
                 embed.add_field(name="🔺 24h High", value=f"${high_24h:,.4f}", inline=True)
                 embed.add_field(name="🔻 24h Low", value=f"${low_24h:,.4f}", inline=True)
-                embed.add_field(name="💰 Market Cap", value=f"${mkt_cap:,.0f}", inline=True)
+                embed.add_field(name="<:x_leo_money:1523386970557120532> Market Cap", value=f"${mkt_cap:,.0f}", inline=True)
                 embed.add_field(name="📦 24h Volume", value=f"${volume:,.0f}", inline=True)
-                embed.add_field(name="🏆 All-Time High", value=f"${ath:,.4f}", inline=True)
+                embed.add_field(name="<a:rizz_rewards:1523620313689100320> All-Time High", value=f"${ath:,.4f}", inline=True)
                 embed.set_footer(text="FangYuan V2 Crypto • Powered by CoinGecko")
                 await ctx.send(embed=embed)
 
             except Exception as e:
-                await ctx.send(embed=make_embed(f"❌ Error: {e}", self.bot.error_color))
+                await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Error: {e}", self.bot.error_color))
 
     @commands.hybrid_command(name="convert", aliases=["cryptoconvert"])
     async def convert(self, ctx, amount: float, from_coin: str, to_coin: str = "usd"):
@@ -420,15 +420,15 @@ class Crypto(commands.Cog):
                     data = await resp.json()
 
                 if not data or from_coin.lower() not in data:
-                    return await ctx.send(embed=make_embed(f"❌ Couldn't find conversion for `{from_coin}` → `{to_coin}`.", self.bot.error_color))
+                    return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Couldn't find conversion for `{from_coin}` → `{to_coin}`.", self.bot.error_color))
 
                 rate = data[from_coin.lower()].get(to_coin.lower())
                 if rate is None:
-                    return await ctx.send(embed=make_embed(f"❌ No rate found for `{to_coin}`.", self.bot.error_color))
+                    return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> No rate found for `{to_coin}`.", self.bot.error_color))
 
                 result = amount * rate
                 embed = discord.Embed(
-                    title="💱 Crypto Conversion",
+                    title="<:x_leo_money:1523386970557120532> Crypto Conversion",
                     description=f"`{amount:,} {from_coin.upper()}` = **`{result:,.6f} {to_coin.upper()}`**",
                     color=0x5865F2,
                     timestamp=datetime.utcnow()
@@ -437,7 +437,7 @@ class Crypto(commands.Cog):
                 await ctx.send(embed=embed)
 
             except Exception as e:
-                await ctx.send(embed=make_embed(f"❌ Error: {e}", self.bot.error_color))
+                await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Error: {e}", self.bot.error_color))
 
     @commands.hybrid_command(name="cryptotop", aliases=["topcrypto", "topcoins"])
     async def cryptotop(self, ctx, limit: int = 10):
@@ -452,14 +452,14 @@ class Crypto(commands.Cog):
                     coins = await resp.json()
 
                 embed = discord.Embed(
-                    title=f"🏆 Top {limit} Cryptocurrencies",
+                    title=f"<a:rizz_rewards:1523620313689100320> Top {limit} Cryptocurrencies",
                     color=0xF0A500,
                     timestamp=datetime.utcnow()
                 )
                 lines = []
                 for coin in coins:
                     change = coin.get("price_change_percentage_24h", 0) or 0
-                    arrow = "🟢" if change >= 0 else "🔴"
+                    arrow = "<a:online:1523383854226870423>" if change >= 0 else "🔴"
                     lines.append(
                         f"**#{coin['market_cap_rank']}** {arrow} **{coin['name']}** ({coin['symbol'].upper()}) — "
                         f"${coin['current_price']:,.4f} | {change:+.2f}%"
@@ -469,7 +469,7 @@ class Crypto(commands.Cog):
                 await ctx.send(embed=embed)
 
             except Exception as e:
-                await ctx.send(embed=make_embed(f"❌ Error: {e}", self.bot.error_color))
+                await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Error: {e}", self.bot.error_color))
 
     @commands.hybrid_command(name="gasfee", aliases=["gas"])
     async def gasfee(self, ctx):
@@ -485,7 +485,7 @@ class Crypto(commands.Cog):
                     data = await resp.json()
 
                 if data.get("status") != "1":
-                    return await ctx.send(embed=make_embed("❌ Failed to fetch gas data.", self.bot.error_color))
+                    return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Failed to fetch gas data.", self.bot.error_color))
 
                 result = data["result"]
                 embed = discord.Embed(
@@ -493,14 +493,14 @@ class Crypto(commands.Cog):
                     color=0x627EEA,
                     timestamp=datetime.utcnow()
                 )
-                embed.add_field(name="🟢 Low (Safe)", value=f"{result['SafeGasPrice']} Gwei", inline=True)
+                embed.add_field(name="<a:online:1523383854226870423> Low (Safe)", value=f"{result['SafeGasPrice']} Gwei", inline=True)
                 embed.add_field(name="🟡 Average", value=f"{result['ProposeGasPrice']} Gwei", inline=True)
                 embed.add_field(name="🔴 Fast", value=f"{result['FastGasPrice']} Gwei", inline=True)
                 embed.set_footer(text="FangYuan V2 Crypto • Powered by Etherscan")
                 await ctx.send(embed=embed)
 
             except Exception as e:
-                await ctx.send(embed=make_embed(f"❌ Error: {e}", self.bot.error_color))
+                await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Error: {e}", self.bot.error_color))
 
     # ─── HELPERS ──────────────────────────────────────────────────────────────
 

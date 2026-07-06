@@ -68,17 +68,17 @@ class FangYuan(commands.Bot):
         for cog in COGS:
             try:
                 await self.load_extension(cog)
-                logger.info(f"  ✓ Loaded {cog}")
+                logger.info(f"  <a:tick:1523383850749792397> Loaded {cog}")
             except Exception as e:
-                logger.error(f"  ✗ Failed to load {cog}: {e}")
+                logger.error(f"  <:Xieron_stolen_emoji_1774597520:1520895245733204039> Failed to load {cog}: {e}")
 
         # Sync slash commands
         logger.info("Syncing application commands...")
         try:
             synced = await self.tree.sync()
-            logger.info(f"  ✓ Synced {len(synced)} command(s) globally")
+            logger.info(f"  <a:tick:1523383850749792397> Synced {len(synced)} command(s) globally")
         except Exception as e:
-            logger.error(f"  ✗ Sync failed: {e}")
+            logger.error(f"  <:Xieron_stolen_emoji_1774597520:1520895245733204039> Sync failed: {e}")
 
     async def on_ready(self):
         logger.info(f"Logged in as {self.user} (ID: {self.user.id})")
@@ -97,28 +97,28 @@ class FangYuan(commands.Bot):
             return
         if isinstance(error, commands.MissingPermissions):
             embed = discord.Embed(
-                description=f"❌ You don't have permission to use this command.",
+                description=f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> You don't have permission to use this command.",
                 color=self.error_color
             )
             await ctx.send(embed=embed, delete_after=5)
             return
         if isinstance(error, commands.BotMissingPermissions):
             embed = discord.Embed(
-                description=f"❌ I'm missing permissions: `{', '.join(error.missing_permissions)}`",
+                description=f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> I'm missing permissions: `{', '.join(error.missing_permissions)}`",
                 color=self.error_color
             )
             await ctx.send(embed=embed, delete_after=5)
             return
         if isinstance(error, commands.MemberNotFound):
             embed = discord.Embed(
-                description="❌ Member not found.",
+                description="<:Xieron_stolen_emoji_1774597520:1520895245733204039> Member not found.",
                 color=self.error_color
             )
             await ctx.send(embed=embed, delete_after=5)
             return
         if isinstance(error, commands.MissingRequiredArgument):
             embed = discord.Embed(
-                description=f"❌ Missing required argument: `{error.param.name}`",
+                description=f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Missing required argument: `{error.param.name}`",
                 color=self.error_color
             )
             await ctx.send(embed=embed, delete_after=5)

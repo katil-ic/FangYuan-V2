@@ -116,7 +116,7 @@ class Autoresponder(commands.Cog):
             data[guild_id] = []
 
         if any(r["trigger"].lower() == trigger.lower() for r in data[guild_id]):
-            return await ctx.send(embed=make_embed(f"❌ A rule for `{trigger}` already exists. Remove it first.", self.bot.error_color))
+            return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> A rule for `{trigger}` already exists. Remove it first.", self.bot.error_color))
 
         data[guild_id].append({
             "trigger": trigger,
@@ -129,7 +129,7 @@ class Autoresponder(commands.Cog):
         })
         save_json(AR_FILE, data)
         self._invalidate(guild_id)
-        embed = discord.Embed(title="✅ Autoresponder Added", color=self.bot.success_color)
+        embed = discord.Embed(title="<a:tick:1523383850749792397> Autoresponder Added", color=self.bot.success_color)
         embed.add_field(name="Trigger", value=f"`{trigger}`", inline=True)
         embed.add_field(name="Response", value=response[:100], inline=False)
         await ctx.send(embed=embed)
@@ -147,7 +147,7 @@ class Autoresponder(commands.Cog):
         try:
             re.compile(trigger)
         except re.error:
-            return await ctx.send(embed=make_embed("❌ Invalid regex pattern.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid regex pattern.", self.bot.error_color))
         await self._ar_add_typed(ctx, trigger, response, "regex")
 
     async def _ar_add_typed(self, ctx, trigger, response, match_type):
@@ -166,7 +166,7 @@ class Autoresponder(commands.Cog):
         })
         save_json(AR_FILE, data)
         self._invalidate(guild_id)
-        await ctx.send(embed=make_embed(f"✅ Added `{match_type}` rule for `{trigger}`.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Added `{match_type}` rule for `{trigger}`.", self.bot.success_color))
 
     @ar_group.command(name="remove", aliases=["delete"])
     @commands.has_permissions(manage_guild=True)
@@ -176,10 +176,10 @@ class Autoresponder(commands.Cog):
         before = len(data.get(guild_id, []))
         data[guild_id] = [r for r in data.get(guild_id, []) if r["trigger"].lower() != trigger.lower()]
         if len(data.get(guild_id, [])) == before:
-            return await ctx.send(embed=make_embed(f"❌ No rule found for `{trigger}`.", self.bot.error_color))
+            return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> No rule found for `{trigger}`.", self.bot.error_color))
         save_json(AR_FILE, data)
         self._invalidate(guild_id)
-        await ctx.send(embed=make_embed(f"✅ Removed autoresponder for `{trigger}`.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Removed autoresponder for `{trigger}`.", self.bot.success_color))
 
     @ar_group.command(name="list")
     @commands.has_permissions(manage_guild=True)
@@ -196,8 +196,8 @@ class Autoresponder(commands.Cog):
         embed = discord.Embed(title=f"🤖 Autoresponders ({len(rules)})", color=0x5865F2)
         lines = []
         for i, r in enumerate(rules, 1):
-            status = "✅" if r.get("enabled", True) else "❌"
-            match_icon = {"exact": "🎯", "startswith": "⬅️", "endswith": "➡️", "regex": "🔣", "contains": "🔍"}.get(r.get("match_type", "contains"), "🔍")
+            status = "<a:tick:1523383850749792397>" if r.get("enabled", True) else "<:Xieron_stolen_emoji_1774597520:1520895245733204039>"
+            match_icon = {"exact": "🎯", "startswith": "⬅️", "endswith": "<a:pink_arrow_haveli:1523620310124068985>", "regex": "🔣", "contains": "🔍"}.get(r.get("match_type", "contains"), "🔍")
             lines.append(f"{status} `#{i}` {match_icon} **{r['trigger']}** → {r['response'][:50]}")
         embed.description = "\n".join(lines)
         embed.set_footer(text="!ar add/remove/enable/disable/info")
@@ -223,10 +223,10 @@ class Autoresponder(commands.Cog):
                 found = True
                 break
         if not found:
-            return await ctx.send(embed=make_embed(f"❌ No rule for `{trigger}`.", self.bot.error_color))
+            return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> No rule for `{trigger}`.", self.bot.error_color))
         save_json(AR_FILE, data)
         self._invalidate(guild_id)
-        await ctx.send(embed=make_embed(f"✅ Rule `{trigger}` {'enabled' if state else 'disabled'}.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Rule `{trigger}` {'enabled' if state else 'disabled'}.", self.bot.success_color))
 
     @ar_group.command(name="toggle_reply")
     @commands.has_permissions(manage_guild=True)
@@ -239,8 +239,8 @@ class Autoresponder(commands.Cog):
                 r["reply"] = not r.get("reply", False)
                 save_json(AR_FILE, data)
                 self._invalidate(guild_id)
-                return await ctx.send(embed=make_embed(f"✅ Reply mode {'on' if r['reply'] else 'off'} for `{trigger}`.", self.bot.success_color))
-        await ctx.send(embed=make_embed(f"❌ No rule for `{trigger}`.", self.bot.error_color))
+                return await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Reply mode {'on' if r['reply'] else 'off'} for `{trigger}`.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> No rule for `{trigger}`.", self.bot.error_color))
 
     @ar_group.command(name="toggle_embed")
     @commands.has_permissions(manage_guild=True)
@@ -253,8 +253,8 @@ class Autoresponder(commands.Cog):
                 r["embed"] = not r.get("embed", False)
                 save_json(AR_FILE, data)
                 self._invalidate(guild_id)
-                return await ctx.send(embed=make_embed(f"✅ Embed mode {'on' if r['embed'] else 'off'} for `{trigger}`.", self.bot.success_color))
-        await ctx.send(embed=make_embed(f"❌ No rule for `{trigger}`.", self.bot.error_color))
+                return await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Embed mode {'on' if r['embed'] else 'off'} for `{trigger}`.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> No rule for `{trigger}`.", self.bot.error_color))
 
     @ar_group.command(name="toggle_delete")
     @commands.has_permissions(manage_guild=True)
@@ -267,8 +267,8 @@ class Autoresponder(commands.Cog):
                 r["delete_trigger"] = not r.get("delete_trigger", False)
                 save_json(AR_FILE, data)
                 self._invalidate(guild_id)
-                return await ctx.send(embed=make_embed(f"✅ Delete trigger {'on' if r['delete_trigger'] else 'off'} for `{trigger}`.", self.bot.success_color))
-        await ctx.send(embed=make_embed(f"❌ No rule for `{trigger}`.", self.bot.error_color))
+                return await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Delete trigger {'on' if r['delete_trigger'] else 'off'} for `{trigger}`.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> No rule for `{trigger}`.", self.bot.error_color))
 
     @ar_group.command(name="info")
     @commands.has_permissions(manage_guild=True)
@@ -278,14 +278,14 @@ class Autoresponder(commands.Cog):
         guild_id = str(ctx.guild.id)
         rule = next((r for r in data.get(guild_id, []) if r["trigger"].lower() == trigger.lower()), None)
         if not rule:
-            return await ctx.send(embed=make_embed(f"❌ No rule for `{trigger}`.", self.bot.error_color))
+            return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> No rule for `{trigger}`.", self.bot.error_color))
         embed = discord.Embed(title=f"📋 Autoresponder: {rule['trigger']}", color=0x5865F2)
         embed.add_field(name="Trigger", value=f"`{rule['trigger']}`", inline=True)
         embed.add_field(name="Match Type", value=rule.get("match_type", "contains"), inline=True)
-        embed.add_field(name="Enabled", value="✅" if rule.get("enabled", True) else "❌", inline=True)
-        embed.add_field(name="Reply Mode", value="✅" if rule.get("reply") else "❌", inline=True)
-        embed.add_field(name="Embed Mode", value="✅" if rule.get("embed") else "❌", inline=True)
-        embed.add_field(name="Delete Trigger", value="✅" if rule.get("delete_trigger") else "❌", inline=True)
+        embed.add_field(name="Enabled", value="<a:tick:1523383850749792397>" if rule.get("enabled", True) else "<:Xieron_stolen_emoji_1774597520:1520895245733204039>", inline=True)
+        embed.add_field(name="Reply Mode", value="<a:tick:1523383850749792397>" if rule.get("reply") else "<:Xieron_stolen_emoji_1774597520:1520895245733204039>", inline=True)
+        embed.add_field(name="Embed Mode", value="<a:tick:1523383850749792397>" if rule.get("embed") else "<:Xieron_stolen_emoji_1774597520:1520895245733204039>", inline=True)
+        embed.add_field(name="Delete Trigger", value="<a:tick:1523383850749792397>" if rule.get("delete_trigger") else "<:Xieron_stolen_emoji_1774597520:1520895245733204039>", inline=True)
         embed.add_field(name="Response", value=rule["response"][:500], inline=False)
         await ctx.send(embed=embed)
 
@@ -299,7 +299,7 @@ class Autoresponder(commands.Cog):
         data[guild_id] = []
         save_json(AR_FILE, data)
         self._invalidate(guild_id)
-        await ctx.send(embed=make_embed(f"✅ Cleared {count} autoresponder(s).", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Cleared {count} autoresponder(s).", self.bot.success_color))
 
 
 async def setup(bot):

@@ -24,7 +24,7 @@ class ReactionRoles(commands.Cog):
         try:
             msg = await ctx.channel.fetch_message(message_id)
         except discord.NotFound:
-            return await ctx.send(embed=make_embed("❌ Message not found in this channel.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Message not found in this channel.", self.bot.error_color))
 
         await msg.add_reaction(emoji)
 
@@ -40,7 +40,7 @@ class ReactionRoles(commands.Cog):
         data[guild_id][msg_id][emoji] = str(role.id)
         save_json(RR_FILE, data)
 
-        await ctx.send(embed=make_embed(f"✅ Reaction role added!\n{emoji} → {role.mention}", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Reaction role added!\n{emoji} → {role.mention}", self.bot.success_color))
 
     @commands.hybrid_command(name="rrremove")
     @commands.has_permissions(manage_roles=True)
@@ -51,18 +51,18 @@ class ReactionRoles(commands.Cog):
         msg_id = str(message_id)
 
         if guild_id not in data or msg_id not in data[guild_id]:
-            return await ctx.send(embed=make_embed("❌ No reaction roles for that message.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> No reaction roles for that message.", self.bot.error_color))
 
         if emoji:
             data[guild_id][msg_id].pop(emoji, None)
             if not data[guild_id][msg_id]:
                 del data[guild_id][msg_id]
             save_json(RR_FILE, data)
-            await ctx.send(embed=make_embed(f"✅ Removed reaction role for {emoji}.", self.bot.success_color))
+            await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Removed reaction role for {emoji}.", self.bot.success_color))
         else:
             del data[guild_id][msg_id]
             save_json(RR_FILE, data)
-            await ctx.send(embed=make_embed("✅ Removed all reaction roles for that message.", self.bot.success_color))
+            await ctx.send(embed=make_embed("<a:tick:1523383850749792397> Removed all reaction roles for that message.", self.bot.success_color))
 
     @commands.hybrid_command(name="rrlist")
     @commands.has_permissions(manage_roles=True)
@@ -169,10 +169,10 @@ class ReactionRoles(commands.Cog):
                     pass
             if emoji and role:
                 pairs[emoji] = role
-                await msg.add_reaction("✅")
+                await msg.add_reaction("<a:tick:1523383850749792397>")
 
         if not pairs:
-            return await ctx.send(embed=make_embed("❌ No valid pairs provided.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> No valid pairs provided.", self.bot.error_color))
 
         embed = discord.Embed(
             title=title,
@@ -198,7 +198,7 @@ class ReactionRoles(commands.Cog):
         data[guild_id][msg_id] = {e: str(r.id) for e, r in pairs.items()}
         save_json(RR_FILE, data)
 
-        await ctx.send(embed=make_embed(f"✅ Reaction role panel created in {channel.mention}!", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Reaction role panel created in {channel.mention}!", self.bot.success_color))
 
     # ─── MASS ROLE ────────────────────────────────────────────────────────────
 
@@ -229,7 +229,7 @@ class ReactionRoles(commands.Cog):
                 failed += 1
 
         await msg.edit(embed=make_embed(
-            f"✅ Mass role complete!\nAdded: **{success}** | Failed: **{failed}**",
+            f"<a:tick:1523383850749792397> Mass role complete!\nAdded: **{success}** | Failed: **{failed}**",
             self.bot.success_color
         ))
 
@@ -256,7 +256,7 @@ class ReactionRoles(commands.Cog):
                 failed += 1
 
         await msg.edit(embed=make_embed(
-            f"✅ Mass unrole complete!\nRemoved: **{success}** | Failed: **{failed}**",
+            f"<a:tick:1523383850749792397> Mass unrole complete!\nRemoved: **{success}** | Failed: **{failed}**",
             self.bot.success_color
         ))
 
@@ -272,11 +272,11 @@ class ReactionRoles(commands.Cog):
         if duration_lower[-1] in units and duration_lower[:-1].isdigit():
             seconds = int(duration_lower[:-1]) * units[duration_lower[-1]]
         else:
-            return await ctx.send(embed=make_embed("❌ Invalid duration.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid duration.", self.bot.error_color))
 
         await member.add_roles(role, reason=f"Temp role ({duration}): {reason}")
         await ctx.send(embed=make_embed(
-            f"✅ Gave {member.mention} **{role.name}** for `{duration}`.\nReason: {reason}",
+            f"<a:tick:1523383850749792397> Gave {member.mention} **{role.name}** for `{duration}`.\nReason: {reason}",
             self.bot.success_color
         ))
         await asyncio.sleep(seconds)
@@ -297,12 +297,12 @@ class ReactionRoles(commands.Cog):
             color_int = int(color.replace("#", ""), 16)
             await role.edit(color=discord.Color(color_int))
             embed = discord.Embed(
-                description=f"✅ Changed {role.mention} color to `{color}`",
+                description=f"<a:tick:1523383850749792397> Changed {role.mention} color to `{color}`",
                 color=color_int
             )
             await ctx.send(embed=embed)
         except ValueError:
-            await ctx.send(embed=make_embed("❌ Invalid color hex.", self.bot.error_color))
+            await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid color hex.", self.bot.error_color))
 
     @commands.hybrid_command(name="rolename")
     @commands.has_permissions(manage_roles=True)
@@ -311,7 +311,7 @@ class ReactionRoles(commands.Cog):
         """Rename a role."""
         old_name = role.name
         await role.edit(name=new_name)
-        await ctx.send(embed=make_embed(f"✅ Renamed `{old_name}` → `{new_name}`", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Renamed `{old_name}` → `{new_name}`", self.bot.success_color))
 
     @commands.hybrid_command(name="createrole")
     @commands.has_permissions(manage_roles=True)
@@ -319,7 +319,7 @@ class ReactionRoles(commands.Cog):
     async def createrole(self, ctx, *, name: str):
         """Create a new role."""
         role = await ctx.guild.create_role(name=name, reason=f"Created by {ctx.author}")
-        await ctx.send(embed=make_embed(f"✅ Created role {role.mention}", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Created role {role.mention}", self.bot.success_color))
 
     @commands.hybrid_command(name="delrole")
     @commands.has_permissions(manage_roles=True)
@@ -328,7 +328,7 @@ class ReactionRoles(commands.Cog):
         """Delete a role."""
         name = role.name
         await role.delete(reason=f"Deleted by {ctx.author}")
-        await ctx.send(embed=make_embed(f"✅ Deleted role `{name}`", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Deleted role `{name}`", self.bot.success_color))
 
 
 async def setup(bot):

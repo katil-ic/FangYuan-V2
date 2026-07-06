@@ -12,7 +12,7 @@ from utils.helpers import make_embed, load_json, save_json
 POLLS_FILE = "data/polls.json"
 
 POLL_EMOJIS = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
-YES_NO_EMOJIS = {"✅": "Yes", "❌": "No"}
+YES_NO_EMOJIS = {"<a:tick:1523383850749792397>": "Yes", "<:Xieron_stolen_emoji_1774597520:1520895245733204039>": "No"}
 
 
 class PollResultView(discord.ui.View):
@@ -26,7 +26,7 @@ class PollResultView(discord.ui.View):
             channel = interaction.guild.get_channel(int(self.poll_data["channel_id"]))
             msg = await channel.fetch_message(int(self.poll_data["message_id"]))
         except Exception:
-            return await interaction.response.send_message("❌ Poll message not found.", ephemeral=True)
+            return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Poll message not found.", ephemeral=True)
 
         options = self.poll_data.get("options", [])
         emojis = POLL_EMOJIS[:len(options)]
@@ -101,17 +101,17 @@ class Polls(commands.Cog):
             # Yes/No poll
             embed = discord.Embed(
                 title="📊 Poll",
-                description=f"**{question}**\n\n✅ Yes\n❌ No",
+                description=f"**{question}**\n\n<a:tick:1523383850749792397> Yes\n<:Xieron_stolen_emoji_1774597520:1520895245733204039> No",
                 color=0x5865F2,
                 timestamp=datetime.utcnow()
             )
             embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.display_avatar.url)
             embed.set_footer(text=f"Poll by {ctx.author}" + (f" • Ends in {duration}" if duration else ""))
             msg = await ctx.send(embed=embed)
-            await msg.add_reaction("✅")
-            await msg.add_reaction("❌")
+            await msg.add_reaction("<a:tick:1523383850749792397>")
+            await msg.add_reaction("<:Xieron_stolen_emoji_1774597520:1520895245733204039>")
         elif len(options) > 10:
-            return await ctx.send(embed=make_embed("❌ Maximum 10 options allowed.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Maximum 10 options allowed.", self.bot.error_color))
         else:
             emojis = POLL_EMOJIS[:len(options)]
             option_lines = "\n".join(f"{emojis[i]} {opt}" for i, opt in enumerate(options))
@@ -202,7 +202,7 @@ class Polls(commands.Cog):
                 color=0x57F287,
                 timestamp=datetime.utcnow()
             )
-            embed.add_field(name="🏆 Winner", value=f"{winner_emoji} **{winner_option}**" if winner_emoji else "No votes", inline=False)
+            embed.add_field(name="<a:rizz_rewards:1523620313689100320> Winner", value=f"{winner_emoji} **{winner_option}**" if winner_emoji else "No votes", inline=False)
             embed.set_footer(text=f"Total votes: {total}")
             await msg.edit(embed=embed, view=None)
 
@@ -227,8 +227,8 @@ class Polls(commands.Cog):
         embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.display_avatar.url)
         embed.set_footer(text=f"React to vote!")
         msg = await ctx.send(embed=embed)
-        await msg.add_reaction("✅")
-        await msg.add_reaction("❌")
+        await msg.add_reaction("<a:tick:1523383850749792397>")
+        await msg.add_reaction("<:Xieron_stolen_emoji_1774597520:1520895245733204039>")
         try:
             await ctx.message.delete()
         except Exception:
@@ -241,17 +241,17 @@ class Polls(commands.Cog):
         try:
             msg = await ctx.channel.fetch_message(message_id)
         except discord.NotFound:
-            return await ctx.send(embed=make_embed("❌ Message not found.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Message not found.", self.bot.error_color))
 
         data = load_json(POLLS_FILE)
         guild_id = str(ctx.guild.id)
         poll_data = data.get(guild_id, {}).get(str(message_id))
 
         if not poll_data:
-            return await ctx.send(embed=make_embed("❌ No poll data for that message. It may not have been created with `!poll`.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> No poll data for that message. It may not have been created with `!poll`.", self.bot.error_color))
 
         if poll_data.get("ended"):
-            return await ctx.send(embed=make_embed("❌ That poll has already ended.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> That poll has already ended.", self.bot.error_color))
 
         options = poll_data.get("options", [])
         question = poll_data.get("question", "Poll")
@@ -284,7 +284,7 @@ class Polls(commands.Cog):
             timestamp=datetime.utcnow()
         )
         if winner_emoji:
-            embed.add_field(name="🏆 Winner", value=f"{winner_emoji} **{winner_option}**", inline=False)
+            embed.add_field(name="<a:rizz_rewards:1523620313689100320> Winner", value=f"{winner_emoji} **{winner_option}**", inline=False)
         embed.set_footer(text=f"Total votes: {total} • Ended by {ctx.author}")
         await msg.edit(embed=embed, view=None)
 
@@ -292,7 +292,7 @@ class Polls(commands.Cog):
         data[guild_id][str(message_id)] = poll_data
         save_json(POLLS_FILE, data)
 
-        await ctx.send(embed=make_embed(f"✅ Poll ended. Winner: **{winner_option}** ({vote_counts.get(winner_emoji, 0)} votes)", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Poll ended. Winner: **{winner_option}** ({vote_counts.get(winner_emoji, 0)} votes)", self.bot.success_color))
 
     @commands.hybrid_command(name="strawpoll")
     @commands.has_permissions(manage_messages=True)
@@ -327,7 +327,7 @@ class Polls(commands.Cog):
             await asyncio.sleep(0.2)
 
         if channel != ctx.channel:
-            await ctx.send(embed=make_embed(f"✅ Poll sent to {channel.mention}!", self.bot.success_color))
+            await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Poll sent to {channel.mention}!", self.bot.success_color))
         try:
             await ctx.message.delete()
         except Exception:

@@ -49,7 +49,7 @@ class EmbedBuilder(discord.ui.View):
         await msg.delete()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="Add Field", style=discord.ButtonStyle.secondary, emoji="➕")
+    @discord.ui.button(label="Add Field", style=discord.ButtonStyle.secondary, emoji="<a:pink_arrow_haveli:1523620310124068985>")
     async def add_field(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Enter field in format: `Name | Value | inline(true/false)`", ephemeral=True)
         msg = await self.ctx.bot.wait_for("message", check=lambda m: m.author == self.ctx.author and m.channel == self.ctx.channel, timeout=60)
@@ -100,7 +100,7 @@ class EmbedBuilder(discord.ui.View):
         await msg.delete()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="Set Author", style=discord.ButtonStyle.secondary, emoji="👤")
+    @discord.ui.button(label="Set Author", style=discord.ButtonStyle.secondary, emoji="<:strangerz_girl_staff:1523386969101697174>")
     async def set_author(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Enter: `name | icon_url (optional) | url (optional)`", ephemeral=True)
         msg = await self.ctx.bot.wait_for("message", check=lambda m: m.author == self.ctx.author and m.channel == self.ctx.channel, timeout=60)
@@ -120,21 +120,21 @@ class EmbedBuilder(discord.ui.View):
             self.embed.timestamp = datetime.utcnow()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="Set Channel", style=discord.ButtonStyle.success, emoji="📢")
+    @discord.ui.button(label="Set Channel", style=discord.ButtonStyle.success, emoji="<a:Announce:1520896619829002240>")
     async def set_channel(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Mention the channel to send to (e.g. `#general`):", ephemeral=True)
         msg = await self.ctx.bot.wait_for("message", check=lambda m: m.author == self.ctx.author and m.channel == self.ctx.channel, timeout=30)
         if msg.channel_mentions:
             self.target_channel = msg.channel_mentions[0]
         await msg.delete()
-        await interaction.followup.send(f"✅ Target channel set to {self.target_channel.mention}", ephemeral=True)
+        await interaction.followup.send(f"<a:tick:1523383850749792397> Target channel set to {self.target_channel.mention}", ephemeral=True)
 
-    @discord.ui.button(label="✅ Send", style=discord.ButtonStyle.success, emoji="🚀")
+    @discord.ui.button(label="<a:tick:1523383850749792397> Send", style=discord.ButtonStyle.success, emoji="🚀")
     async def send_embed(self, interaction: discord.Interaction, button: discord.ui.Button):
         if not self.embed.title and not self.embed.description:
-            return await interaction.response.send_message("❌ Add a title or description first.", ephemeral=True)
+            return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Add a title or description first.", ephemeral=True)
         await self.target_channel.send(embed=self.embed)
-        await interaction.response.send_message(f"✅ Embed sent to {self.target_channel.mention}!", ephemeral=True)
+        await interaction.response.send_message(f"<a:tick:1523383850749792397> Embed sent to {self.target_channel.mention}!", ephemeral=True)
         self.stop()
 
     @discord.ui.button(label="💾 Save", style=discord.ButtonStyle.success, emoji="💾")
@@ -149,9 +149,9 @@ class EmbedBuilder(discord.ui.View):
             saved[guild_id] = {}
         saved[guild_id][name] = embed_to_dict(self.embed)
         save_json(SAVED_EMBEDS_FILE, saved)
-        await interaction.followup.send(f"✅ Embed saved as `{name}`!", ephemeral=True)
+        await interaction.followup.send(f"<a:tick:1523383850749792397> Embed saved as `{name}`!", ephemeral=True)
 
-    @discord.ui.button(label="❌ Cancel", style=discord.ButtonStyle.danger)
+    @discord.ui.button(label="<:Xieron_stolen_emoji_1774597520:1520895245733204039> Cancel", style=discord.ButtonStyle.danger)
     async def cancel(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.message.delete()
         self.stop()
@@ -199,11 +199,11 @@ class Embeds(commands.Cog):
             data = json.loads(json_text)
             embed = discord.Embed.from_dict(data)
             await channel.send(embed=embed)
-            await ctx.send(embed=make_embed(f"✅ Embed sent to {channel.mention}.", self.bot.success_color))
+            await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Embed sent to {channel.mention}.", self.bot.success_color))
         except json.JSONDecodeError:
-            await ctx.send(embed=make_embed("❌ Invalid JSON.", self.bot.error_color))
+            await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid JSON.", self.bot.error_color))
         except Exception as e:
-            await ctx.send(embed=make_embed(f"❌ Error: {e}", self.bot.error_color))
+            await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Error: {e}", self.bot.error_color))
 
     @commands.hybrid_command(name="embeds", aliases=["savedembeds"])
     @commands.has_permissions(manage_messages=True)
@@ -226,11 +226,11 @@ class Embeds(commands.Cog):
         guild_id = str(ctx.guild.id)
         e_data = saved.get(guild_id, {}).get(name.lower())
         if not e_data:
-            return await ctx.send(embed=make_embed(f"❌ No saved embed named `{name}`.", self.bot.error_color))
+            return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> No saved embed named `{name}`.", self.bot.error_color))
         embed = dict_to_embed(e_data)
         target = channel or ctx.channel
         await target.send(embed=embed)
-        await ctx.send(embed=make_embed(f"✅ Embed `{name}` sent to {target.mention}.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Embed `{name}` sent to {target.mention}.", self.bot.success_color))
 
     @commands.hybrid_command(name="embeddelete")
     @commands.has_permissions(manage_messages=True)
@@ -241,9 +241,9 @@ class Embeds(commands.Cog):
         if name.lower() in saved.get(guild_id, {}):
             del saved[guild_id][name.lower()]
             save_json(SAVED_EMBEDS_FILE, saved)
-            await ctx.send(embed=make_embed(f"✅ Deleted embed `{name}`.", self.bot.success_color))
+            await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Deleted embed `{name}`.", self.bot.success_color))
         else:
-            await ctx.send(embed=make_embed(f"❌ No embed named `{name}`.", self.bot.error_color))
+            await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> No embed named `{name}`.", self.bot.error_color))
 
     @commands.hybrid_command(name="say")
     @commands.has_permissions(manage_messages=True)
@@ -289,14 +289,14 @@ class Embeds(commands.Cog):
         try:
             msg = await ctx.channel.fetch_message(message_id)
             if msg.author != ctx.guild.me:
-                return await ctx.send(embed=make_embed("❌ I can only edit my own messages.", self.bot.error_color))
+                return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> I can only edit my own messages.", self.bot.error_color))
             await msg.edit(content=new_content)
             try:
                 await ctx.message.delete()
             except Exception:
                 pass
         except discord.NotFound:
-            await ctx.send(embed=make_embed("❌ Message not found.", self.bot.error_color))
+            await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Message not found.", self.bot.error_color))
 
 
 async def setup(bot):

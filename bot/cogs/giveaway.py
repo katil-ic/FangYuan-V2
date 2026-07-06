@@ -12,7 +12,7 @@ from utils.helpers import make_embed, load_json, save_json
 
 GA_FILE = "data/giveaways.json"
 
-GIVEAWAY_EMOJI = "🎉"
+GIVEAWAY_EMOJI = "<a:ri_tada:1523620315325010092>"
 
 
 def parse_time(time_str: str) -> int:
@@ -41,7 +41,7 @@ def format_duration(seconds: int) -> str:
 def build_giveaway_embed(prize: str, host: discord.Member, ends_at: int, winners: int,
                           entries: int, description: str = None, requirements: str = None, ended: bool = False) -> discord.Embed:
     color = 0xED4245 if ended else 0xFEE75C
-    title = f"{'🏆' if ended else '🎉'} {'ENDED: ' if ended else ''}{prize}"
+    title = f"{'<a:rizz_rewards:1523620313689100320>' if ended else '<a:ri_tada:1523620315325010092>'} {'ENDED: ' if ended else ''}{prize}"
 
     embed = discord.Embed(title=title, color=color, timestamp=datetime.utcnow())
 
@@ -73,7 +73,7 @@ class GiveawayView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
 
-    @discord.ui.button(label="🎉 Enter", style=discord.ButtonStyle.success, custom_id="giveaway:enter")
+    @discord.ui.button(label="<a:ri_tada:1523620315325010092> Enter", style=discord.ButtonStyle.success, custom_id="giveaway:enter")
     async def enter(self, interaction: discord.Interaction, button: discord.ui.Button):
         data = load_json(GA_FILE)
         guild_id = str(interaction.guild.id)
@@ -81,9 +81,9 @@ class GiveawayView(discord.ui.View):
 
         giveaway = data.get(guild_id, {}).get(msg_id)
         if not giveaway:
-            return await interaction.response.send_message("❌ This giveaway no longer exists.", ephemeral=True)
+            return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> This giveaway no longer exists.", ephemeral=True)
         if giveaway.get("ended"):
-            return await interaction.response.send_message("❌ This giveaway has already ended.", ephemeral=True)
+            return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> This giveaway has already ended.", ephemeral=True)
 
         user_id = str(interaction.user.id)
         entries = giveaway.get("entries", [])
@@ -100,7 +100,7 @@ class GiveawayView(discord.ui.View):
                 await interaction.message.edit(embed=embed)
             except Exception:
                 pass
-            return await interaction.response.send_message("❌ You've left the giveaway.", ephemeral=True)
+            return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> You've left the giveaway.", ephemeral=True)
         else:
             entries.append(user_id)
             data[guild_id][msg_id]["entries"] = entries
@@ -113,7 +113,7 @@ class GiveawayView(discord.ui.View):
                 await interaction.message.edit(embed=embed)
             except Exception:
                 pass
-            return await interaction.response.send_message(f"✅ You've entered! Total entries: **{total}**", ephemeral=True)
+            return await interaction.response.send_message(f"<a:tick:1523383850749792397> You've entered! Total entries: **{total}**", ephemeral=True)
 
 
 class Giveaway(commands.Cog):
@@ -189,7 +189,7 @@ class Giveaway(commands.Cog):
             entries=len(entries),
             ended=True
         )
-        ended_embed.add_field(name="🏆 Winners", value=winner_text, inline=False)
+        ended_embed.add_field(name="<a:rizz_rewards:1523620313689100320> Winners", value=winner_text, inline=False)
 
         await msg.edit(embed=ended_embed, view=None)
 
@@ -197,14 +197,14 @@ class Giveaway(commands.Cog):
             await channel.send(
                 content=" ".join(f"<@{w}>" for w in winners),
                 embed=discord.Embed(
-                    title="🎉 Giveaway Ended!",
-                    description=f"Congratulations {winner_text}!\nYou won **{prize}**! 🎊\n\nContact {host.mention if host else 'the host'} to claim your prize.",
+                    title="<a:ri_tada:1523620315325010092> Giveaway Ended!",
+                    description=f"Congratulations {winner_text}!\nYou won **{prize}**! <a:ri_tada:1523620315325010092>\n\nContact {host.mention if host else 'the host'} to claim your prize.",
                     color=0x57F287,
                     timestamp=datetime.utcnow()
                 )
             )
         else:
-            await channel.send(embed=make_embed(f"🎉 The **{prize}** giveaway ended with no valid entries.", 0xFEE75C))
+            await channel.send(embed=make_embed(f"<a:ri_tada:1523620315325010092> The **{prize}** giveaway ended with no valid entries.", 0xFEE75C))
 
         data[guild_id][msg_id]["ended"] = True
         data[guild_id][msg_id]["winner_ids"] = winners
@@ -223,7 +223,7 @@ class Giveaway(commands.Cog):
         channel = channel or ctx.channel
         seconds = parse_time(duration)
         if not seconds:
-            return await ctx.send(embed=make_embed("❌ Invalid duration. Use e.g. `1d`, `2h`, `30m`.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid duration. Use e.g. `1d`, `2h`, `30m`.", self.bot.error_color))
 
         try:
             w_count = int(winners.rstrip("w"))
@@ -260,7 +260,7 @@ class Giveaway(commands.Cog):
         }
         save_json(GA_FILE, data)
 
-        await ctx.send(embed=make_embed(f"✅ Giveaway started in {channel.mention}!\n[Jump to giveaway]({msg.jump_url})", self.bot.success_color), delete_after=10)
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Giveaway started in {channel.mention}!\n[Jump to giveaway]({msg.jump_url})", self.bot.success_color), delete_after=10)
         try:
             await ctx.message.delete()
         except Exception:
@@ -278,18 +278,18 @@ class Giveaway(commands.Cog):
             active = [(mid, ga) for mid, ga in data.get(guild_id, {}).items()
                       if ga["channel_id"] == str(ctx.channel.id) and not ga.get("ended")]
             if not active:
-                return await ctx.send(embed=make_embed("❌ No active giveaway in this channel.", self.bot.error_color))
+                return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> No active giveaway in this channel.", self.bot.error_color))
             message_id = int(active[-1][0])
 
         msg_id = str(message_id)
         if msg_id not in data.get(guild_id, {}):
-            return await ctx.send(embed=make_embed("❌ Giveaway not found.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Giveaway not found.", self.bot.error_color))
         if data[guild_id][msg_id].get("ended"):
-            return await ctx.send(embed=make_embed("❌ That giveaway has already ended.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> That giveaway has already ended.", self.bot.error_color))
 
         guild = ctx.guild
         await self._end_giveaway(guild, guild_id, msg_id, data)
-        await ctx.send(embed=make_embed("✅ Giveaway ended.", self.bot.success_color))
+        await ctx.send(embed=make_embed("<a:tick:1523383850749792397> Giveaway ended.", self.bot.success_color))
 
     @commands.hybrid_command(name="greroll", aliases=["giveawayreroll"])
     @commands.has_permissions(manage_guild=True)
@@ -301,22 +301,22 @@ class Giveaway(commands.Cog):
         if not message_id:
             ended = [(mid, ga) for mid, ga in data.get(guild_id, {}).items() if ga.get("ended")]
             if not ended:
-                return await ctx.send(embed=make_embed("❌ No ended giveaways found.", self.bot.error_color))
+                return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> No ended giveaways found.", self.bot.error_color))
             message_id = int(ended[-1][0])
 
         msg_id = str(message_id)
         ga = data.get(guild_id, {}).get(msg_id)
         if not ga:
-            return await ctx.send(embed=make_embed("❌ Giveaway not found.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Giveaway not found.", self.bot.error_color))
         if not ga.get("ended"):
-            return await ctx.send(embed=make_embed("❌ Can only reroll ended giveaways.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Can only reroll ended giveaways.", self.bot.error_color))
 
         entries = ga.get("entries", [])
         w_count = new_winners or ga.get("winners", 1)
         valid = [uid for uid in entries if ctx.guild.get_member(int(uid))]
 
         if not valid:
-            return await ctx.send(embed=make_embed("❌ No valid entries to reroll from.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> No valid entries to reroll from.", self.bot.error_color))
 
         winners = random.sample(valid, min(w_count, len(valid)))
         winner_text = " ".join(f"<@{w}>" for w in winners)
@@ -340,7 +340,7 @@ class Giveaway(commands.Cog):
         if not active:
             return await ctx.send(embed=make_embed("No active giveaways.", 0x5865F2))
 
-        embed = discord.Embed(title="🎉 Active Giveaways", color=0xFEE75C, timestamp=datetime.utcnow())
+        embed = discord.Embed(title="<a:ri_tada:1523620315325010092> Active Giveaways", color=0xFEE75C, timestamp=datetime.utcnow())
         for mid, ga in active:
             channel = ctx.guild.get_channel(int(ga["channel_id"]))
             ends_at = ga.get("ends_at", 0)
@@ -367,9 +367,9 @@ class Giveaway(commands.Cog):
         if msg_id in data.get(guild_id, {}):
             del data[guild_id][msg_id]
             save_json(GA_FILE, data)
-            await ctx.send(embed=make_embed("✅ Giveaway deleted from database.", self.bot.success_color))
+            await ctx.send(embed=make_embed("<a:tick:1523383850749792397> Giveaway deleted from database.", self.bot.success_color))
         else:
-            await ctx.send(embed=make_embed("❌ Giveaway not found.", self.bot.error_color))
+            await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Giveaway not found.", self.bot.error_color))
 
     @commands.hybrid_command(name="ginfo")
     @commands.has_permissions(manage_guild=True)
@@ -379,16 +379,16 @@ class Giveaway(commands.Cog):
         guild_id = str(ctx.guild.id)
         ga = data.get(guild_id, {}).get(str(message_id))
         if not ga:
-            return await ctx.send(embed=make_embed("❌ Giveaway not found.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Giveaway not found.", self.bot.error_color))
 
         channel = ctx.guild.get_channel(int(ga["channel_id"]))
         host = ctx.guild.get_member(int(ga["host_id"])) if ga.get("host_id") else None
         ends_at = ga.get("ends_at", 0)
         embed = discord.Embed(
-            title=f"🎉 Giveaway Info: {ga['prize']}",
+            title=f"<a:ri_tada:1523620315325010092> Giveaway Info: {ga['prize']}",
             color=0xFEE75C if not ga.get("ended") else 0x5865F2
         )
-        embed.add_field(name="Status", value="Ended ✅" if ga.get("ended") else "Active 🎉", inline=True)
+        embed.add_field(name="Status", value="Ended <a:tick:1523383850749792397>" if ga.get("ended") else "Active <a:ri_tada:1523620315325010092>", inline=True)
         embed.add_field(name="Channel", value=channel.mention if channel else "Unknown", inline=True)
         embed.add_field(name="Host", value=host.mention if host else "Unknown", inline=True)
         embed.add_field(name="Winners", value=str(ga.get("winners", 1)), inline=True)
@@ -396,7 +396,7 @@ class Giveaway(commands.Cog):
         embed.add_field(name="Ends At", value=f"<t:{ends_at}:F>", inline=True)
         if ga.get("winner_ids"):
             winner_text = " ".join(f"<@{w}>" for w in ga["winner_ids"])
-            embed.add_field(name="🏆 Winners", value=winner_text, inline=False)
+            embed.add_field(name="<a:rizz_rewards:1523620313689100320> Winners", value=winner_text, inline=False)
         await ctx.send(embed=embed)
 
 

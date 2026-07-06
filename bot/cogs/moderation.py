@@ -25,13 +25,13 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *, reason="No reason provided"):
         if member.top_role >= ctx.author.top_role and ctx.author != ctx.guild.owner:
-            return await ctx.send(embed=make_embed("❌ You cannot ban someone with equal or higher role.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> You cannot ban someone with equal or higher role.", self.bot.error_color))
         try:
             await member.send(embed=make_embed(f"You have been **banned** from **{ctx.guild.name}**.\nReason: {reason}", self.bot.error_color))
         except Exception:
             pass
         await member.ban(reason=f"{ctx.author}: {reason}")
-        await ctx.send(embed=make_embed(f"🔨 **{member}** has been banned.\nReason: {reason}", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:Mod:1520895258118983743> **{member}** has been banned.\nReason: {reason}", self.bot.success_color))
         await self._log(ctx.guild, "Ban", ctx.author, member, reason)
 
     @commands.hybrid_command(name="unban")
@@ -41,9 +41,9 @@ class Moderation(commands.Cog):
         try:
             user = await self.bot.fetch_user(user_id)
             await ctx.guild.unban(user, reason=f"{ctx.author}: {reason}")
-            await ctx.send(embed=make_embed(f"✅ **{user}** has been unbanned.", self.bot.success_color))
+            await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> **{user}** has been unbanned.", self.bot.success_color))
         except discord.NotFound:
-            await ctx.send(embed=make_embed("❌ That user is not banned.", self.bot.error_color))
+            await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> That user is not banned.", self.bot.error_color))
 
     @commands.hybrid_command(name="tempban", aliases=["tb"])
     @commands.has_permissions(ban_members=True)
@@ -51,7 +51,7 @@ class Moderation(commands.Cog):
     async def tempban(self, ctx, member: discord.Member, duration: str, *, reason="No reason provided"):
         seconds = parse_time(duration)
         if not seconds:
-            return await ctx.send(embed=make_embed("❌ Invalid duration. Use e.g. `1d`, `2h`, `30m`", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid duration. Use e.g. `1d`, `2h`, `30m`", self.bot.error_color))
         try:
             await member.send(embed=make_embed(
                 f"You have been **temp-banned** from **{ctx.guild.name}** for `{duration}`.\nReason: {reason}",
@@ -60,7 +60,7 @@ class Moderation(commands.Cog):
         except Exception:
             pass
         await member.ban(reason=f"Tempban ({duration}): {ctx.author}: {reason}")
-        await ctx.send(embed=make_embed(f"🔨 **{member}** has been temp-banned for `{duration}`.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:Mod:1520895258118983743> **{member}** has been temp-banned for `{duration}`.", self.bot.success_color))
         await asyncio.sleep(seconds)
         try:
             await ctx.guild.unban(member, reason="Tempban expired")
@@ -74,7 +74,7 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason="No reason provided"):
         if member.top_role >= ctx.author.top_role and ctx.author != ctx.guild.owner:
-            return await ctx.send(embed=make_embed("❌ You cannot kick someone with equal or higher role.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> You cannot kick someone with equal or higher role.", self.bot.error_color))
         try:
             await member.send(embed=make_embed(f"You have been **kicked** from **{ctx.guild.name}**.\nReason: {reason}", self.bot.warning_color))
         except Exception:
@@ -91,7 +91,7 @@ class Moderation(commands.Cog):
     async def mute(self, ctx, member: discord.Member, duration: str = "10m", *, reason="No reason provided"):
         seconds = parse_time(duration)
         if not seconds:
-            return await ctx.send(embed=make_embed("❌ Invalid duration. Use e.g. `1d`, `2h`, `30m`", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid duration. Use e.g. `1d`, `2h`, `30m`", self.bot.error_color))
         until = datetime.now(timezone.utc) + timedelta(seconds=seconds)
         await member.timeout(until, reason=f"{ctx.author}: {reason}")
         await ctx.send(embed=make_embed(f"🔇 **{member}** has been muted for `{duration}`.\nReason: {reason}", self.bot.success_color))
@@ -141,7 +141,7 @@ class Moderation(commands.Cog):
         user_id = str(member.id)
         user_warns = warns.get(guild_id, {}).get(user_id, [])
         if not user_warns:
-            return await ctx.send(embed=make_embed(f"✅ **{member}** has no warnings.", self.bot.success_color))
+            return await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> **{member}** has no warnings.", self.bot.success_color))
         embed = discord.Embed(
             title=f"⚠️ Warnings for {member}",
             color=self.bot.warning_color,
@@ -166,7 +166,7 @@ class Moderation(commands.Cog):
         if guild_id in warns and user_id in warns[guild_id]:
             warns[guild_id][user_id] = []
             save_json(WARNS_FILE, warns)
-        await ctx.send(embed=make_embed(f"✅ Cleared all warnings for **{member}**.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Cleared all warnings for **{member}**.", self.bot.success_color))
 
     # ─── PURGE ────────────────────────────────────────────────────────────────
 
@@ -175,7 +175,7 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(manage_messages=True)
     async def purge(self, ctx, amount: int, member: discord.Member = None):
         if amount < 1 or amount > 1000:
-            return await ctx.send(embed=make_embed("❌ Amount must be between 1 and 1000.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Amount must be between 1 and 1000.", self.bot.error_color))
         try:
             await ctx.message.delete()
         except Exception:
@@ -235,12 +235,12 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(manage_channels=True)
     async def slowmode(self, ctx, seconds: int = 0):
         if seconds < 0 or seconds > 21600:
-            return await ctx.send(embed=make_embed("❌ Slowmode must be between 0 and 21600 seconds.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Slowmode must be between 0 and 21600 seconds.", self.bot.error_color))
         await ctx.channel.edit(slowmode_delay=seconds)
         if seconds == 0:
-            await ctx.send(embed=make_embed(f"✅ Slowmode disabled in {ctx.channel.mention}.", self.bot.success_color))
+            await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Slowmode disabled in {ctx.channel.mention}.", self.bot.success_color))
         else:
-            await ctx.send(embed=make_embed(f"✅ Slowmode set to **{seconds}s** in {ctx.channel.mention}.", self.bot.success_color))
+            await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Slowmode set to **{seconds}s** in {ctx.channel.mention}.", self.bot.success_color))
 
     # ─── NICK ─────────────────────────────────────────────────────────────────
 
@@ -251,9 +251,9 @@ class Moderation(commands.Cog):
         old = member.display_name
         await member.edit(nick=nickname)
         if nickname:
-            await ctx.send(embed=make_embed(f"✅ Changed **{old}'s** nickname to **{nickname}**.", self.bot.success_color))
+            await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Changed **{old}'s** nickname to **{nickname}**.", self.bot.success_color))
         else:
-            await ctx.send(embed=make_embed(f"✅ Reset **{old}'s** nickname.", self.bot.success_color))
+            await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Reset **{old}'s** nickname.", self.bot.success_color))
 
     # ─── ROLE MANAGEMENT ──────────────────────────────────────────────────────
 
@@ -262,18 +262,18 @@ class Moderation(commands.Cog):
     @commands.bot_has_permissions(manage_roles=True)
     async def addrole(self, ctx, member: discord.Member, role: discord.Role):
         if role in member.roles:
-            return await ctx.send(embed=make_embed(f"❌ {member.mention} already has {role.mention}.", self.bot.error_color))
+            return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> {member.mention} already has {role.mention}.", self.bot.error_color))
         await member.add_roles(role)
-        await ctx.send(embed=make_embed(f"✅ Added {role.mention} to {member.mention}.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Added {role.mention} to {member.mention}.", self.bot.success_color))
 
     @commands.hybrid_command(name="removerole", aliases=["rr"])
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def removerole(self, ctx, member: discord.Member, role: discord.Role):
         if role not in member.roles:
-            return await ctx.send(embed=make_embed(f"❌ {member.mention} doesn't have {role.mention}.", self.bot.error_color))
+            return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> {member.mention} doesn't have {role.mention}.", self.bot.error_color))
         await member.remove_roles(role)
-        await ctx.send(embed=make_embed(f"✅ Removed {role.mention} from {member.mention}.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Removed {role.mention} from {member.mention}.", self.bot.success_color))
 
     # ─── CHANNEL MANAGEMENT ───────────────────────────────────────────────────
 
@@ -307,7 +307,7 @@ class Moderation(commands.Cog):
             "Unban": 0x57F287,
         }
         embed = discord.Embed(
-            title=f"🛡️ Moderation Action — {action}",
+            title=f"<:strangerz_girl_staff:1523386969101697174> Moderation Action — {action}",
             color=colors.get(action, 0x5865F2),
             timestamp=datetime.utcnow()
         )
@@ -328,7 +328,7 @@ class Moderation(commands.Cog):
             cfg[guild_id] = {}
         cfg[guild_id]["mod_log_channel"] = str(channel.id)
         save_json("data/config.json", cfg)
-        await ctx.send(embed=make_embed(f"✅ Mod log channel set to {channel.mention}.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Mod log channel set to {channel.mention}.", self.bot.success_color))
 
 
 # ─── HELPER FUNCTIONS ─────────────────────────────────────────────────────────

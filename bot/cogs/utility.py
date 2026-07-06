@@ -27,7 +27,7 @@ class Utility(commands.Cog):
         if command_name:
             cmd = self.bot.get_command(command_name)
             if not cmd:
-                return await ctx.send(embed=make_embed(f"❌ Command `{command_name}` not found.", self.bot.error_color))
+                return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Command `{command_name}` not found.", self.bot.error_color))
             embed = discord.Embed(title=f"📖 Command: {cmd.name}", color=0x5865F2)
             embed.add_field(name="Description", value=cmd.help or "No description.", inline=False)
             if cmd.aliases:
@@ -44,7 +44,7 @@ class Utility(commands.Cog):
         embed.set_thumbnail(url=self.bot.user.display_avatar.url)
 
         categories = {
-            "🛡️ Moderation": [
+            "<:strangerz_girl_staff:1523386969101697174> Moderation": [
                 "ban", "unban", "tempban", "kick", "mute", "unmute",
                 "warn", "warnings", "clearwarns", "purge", "lock", "unlock",
                 "lockall", "slowmode", "nick", "addrole", "removerole", "nuke"
@@ -52,7 +52,7 @@ class Utility(commands.Cog):
             "🎫 Tickets": [
                 "ticketpanel", "ticketsetup", "addtoticket", "removefromticket", "ticketstats"
             ],
-            "🎉 Welcome": [
+            "<a:ri_tada:1523620315325010092> Welcome": [
                 "welcome", "leave", "autorole", "dmwelcome"
             ],
             "📝 Embeds": [
@@ -61,13 +61,13 @@ class Utility(commands.Cog):
             "🤖 Autoresponder": [
                 "ar add", "ar remove", "ar list", "ar enable", "ar disable", "ar info", "ar clear"
             ],
-            "📢 Announcements": [
+            "<a:Announce:1520896619829002240> Announcements": [
                 "announce", "announceembed", "annrole", "broadcast", "setannchannel", "quickann", "updatelog"
             ],
-            "💰 Crypto": [
+            "<:x_leo_money:1523386970557120532> Crypto": [
                 "ball", "cryptoinfo", "convert", "cryptotop", "gasfee"
             ],
-            "🎊 Giveaways": [
+            "<a:ri_tada:1523620315325010092> Giveaways": [
                 "gstart", "gend", "greroll", "glist", "gdelete", "ginfo"
             ],
             "📊 Polls": [
@@ -79,7 +79,7 @@ class Utility(commands.Cog):
             "ℹ️ Info": [
                 "serverinfo", "userinfo", "roleinfo", "botinfo", "channelinfo", "avatar"
             ],
-            "🔧 Utility": [
+            "<a:Mod:1520895258118983743> Utility": [
                 "ping", "uptime", "remind", "snipe", "editsnipe", "afk", "afklist", "inviteinfo"
             ],
         }
@@ -102,7 +102,7 @@ class Utility(commands.Cog):
         embed = discord.Embed(title="🏓 Pong!", color=0x57F287)
         embed.add_field(name="WebSocket", value=f"`{ws_latency}ms`", inline=True)
         embed.add_field(name="API", value=f"`{api_latency}ms`", inline=True)
-        quality = "🟢 Excellent" if ws_latency < 100 else "🟡 Good" if ws_latency < 200 else "🔴 Poor"
+        quality = "<a:online:1523383854226870423> Excellent" if ws_latency < 100 else "🟡 Good" if ws_latency < 200 else "🔴 Poor"
         embed.add_field(name="Quality", value=quality, inline=True)
         await msg.edit(embed=embed)
 
@@ -126,10 +126,10 @@ class Utility(commands.Cog):
         if duration[-1] in units and duration[:-1].isdigit():
             seconds = int(duration[:-1]) * units[duration[-1]]
         else:
-            return await ctx.send(embed=make_embed("❌ Invalid duration. Use `10s`, `5m`, `2h`, `1d`.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid duration. Use `10s`, `5m`, `2h`, `1d`.", self.bot.error_color))
 
         if seconds > 86400 * 7:
-            return await ctx.send(embed=make_embed("❌ Maximum reminder duration is 7 days.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Maximum reminder duration is 7 days.", self.bot.error_color))
 
         fire_at = int(datetime.now(timezone.utc).timestamp()) + seconds
         embed = discord.Embed(
@@ -170,7 +170,7 @@ class Utility(commands.Cog):
         """Snipe the last deleted message in this channel."""
         msg = self._snipe_cache.get(ctx.channel.id)
         if not msg:
-            return await ctx.send(embed=make_embed("❌ Nothing to snipe here.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Nothing to snipe here.", self.bot.error_color))
         embed = discord.Embed(
             description=msg.content or "*[no text content]*",
             color=0xFEE75C,
@@ -188,7 +188,7 @@ class Utility(commands.Cog):
         """Snipe the last edited message in this channel."""
         result = self._edit_snipe_cache.get(ctx.channel.id)
         if not result:
-            return await ctx.send(embed=make_embed("❌ Nothing to snipe here.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Nothing to snipe here.", self.bot.error_color))
         before, after = result
         embed = discord.Embed(color=0x5865F2, timestamp=before.created_at)
         embed.set_author(name=str(before.author), icon_url=before.author.display_avatar.url)
@@ -290,7 +290,7 @@ class Utility(commands.Cog):
             embed.add_field(name="Inviter", value=str(invite.inviter) if invite.inviter else "Unknown", inline=True)
             await ctx.send(embed=embed)
         except discord.NotFound:
-            await ctx.send(embed=make_embed("❌ Invalid or expired invite.", self.bot.error_color))
+            await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid or expired invite.", self.bot.error_color))
 
     @commands.hybrid_command(name="membercount", aliases=["mc"])
     async def membercount(self, ctx):
@@ -301,7 +301,7 @@ class Utility(commands.Cog):
         humans = total - bots
         online = sum(1 for m in guild.members if m.status != discord.Status.offline)
 
-        embed = discord.Embed(title=f"👥 {guild.name} — Member Count", color=0x5865F2)
+        embed = discord.Embed(title=f"<:strangerz_girl_staff:1523386969101697174> {guild.name} — Member Count", color=0x5865F2)
         embed.add_field(name="Total", value=f"{total:,}", inline=True)
         embed.add_field(name="Humans", value=f"{humans:,}", inline=True)
         embed.add_field(name="Bots", value=f"{bots:,}", inline=True)
@@ -314,7 +314,7 @@ class Utility(commands.Cog):
     async def charinfo(self, ctx, *, characters: str):
         """Get Unicode info about characters."""
         if len(characters) > 20:
-            return await ctx.send(embed=make_embed("❌ Too many characters (max 20).", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Too many characters (max 20).", self.bot.error_color))
         lines = []
         for char in characters:
             cp = ord(char)
@@ -339,7 +339,7 @@ class Utility(commands.Cog):
             dt = dateparser.parse(dt_str)
             ts = int(dt.timestamp())
         except Exception:
-            return await ctx.send(embed=make_embed("❌ Couldn't parse date. Try `2025-01-01 12:00` or `January 1, 2025`.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Couldn't parse date. Try `2025-01-01 12:00` or `January 1, 2025`.", self.bot.error_color))
 
         embed = discord.Embed(title="🕐 Timestamp", color=0x5865F2)
         embed.add_field(name="Unix", value=f"`{ts}`", inline=False)

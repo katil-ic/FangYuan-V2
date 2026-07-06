@@ -45,11 +45,11 @@ class Info(commands.Cog):
             embed.set_image(url=g.banner.with_size(1024).url)
 
         embed.add_field(name="🆔 Server ID", value=str(g.id), inline=True)
-        embed.add_field(name="👑 Owner", value=g.owner.mention if g.owner else "Unknown", inline=True)
+        embed.add_field(name="<:owner:1523383841295827084> Owner", value=g.owner.mention if g.owner else "Unknown", inline=True)
         embed.add_field(name="📅 Created", value=format_date(g.created_at), inline=False)
         embed.add_field(
-            name=f"👥 Members ({g.member_count})",
-            value=f"👤 Humans: {humans}\n🤖 Bots: {bots}\n🟢 Online: {online}\n🟡 Idle: {idle}\n🔴 DND: {dnd}\n⚫ Offline: {offline}",
+            name=f"<:strangerz_girl_staff:1523386969101697174> Members ({g.member_count})",
+            value=f"<:strangerz_girl_staff:1523386969101697174> Humans: {humans}\n🤖 Bots: {bots}\n<a:online:1523383854226870423> Online: {online}\n🟡 Idle: {idle}\n🔴 DND: {dnd}\n⚫ Offline: {offline}",
             inline=True
         )
         embed.add_field(
@@ -63,7 +63,7 @@ class Info(commands.Cog):
                 f"🌍 Region: {str(g.preferred_locale)}\n"
                 f"🔐 Verification: {g.verification_level.name.title()}\n"
                 f"🚀 Boost Level: {g.premium_tier}\n"
-                f"💎 Boosts: {g.premium_subscription_count}\n"
+                f"<a:rizz_blacky_hearts:1523386407651905769> Boosts: {g.premium_subscription_count}\n"
                 f"🎭 Roles: {roles}"
             ),
             inline=True
@@ -71,7 +71,7 @@ class Info(commands.Cog):
 
         features = [f.replace("_", " ").title() for f in g.features[:8]] if g.features else []
         if features:
-            embed.add_field(name="✨ Features", value=", ".join(features), inline=False)
+            embed.add_field(name="<:Star2:1520896622932791296> Features", value=", ".join(features), inline=False)
 
         embed.set_footer(text=f"FangYuan V2 • Shard {ctx.guild.shard_id if ctx.guild.shard_id is not None else 0}")
         await ctx.send(embed=embed)
@@ -83,7 +83,7 @@ class Info(commands.Cog):
         roles = [r.mention for r in reversed(member.roles) if r != ctx.guild.default_role]
 
         status_icons = {
-            discord.Status.online: "🟢",
+            discord.Status.online: "<a:online:1523383854226870423>",
             discord.Status.idle: "🟡",
             discord.Status.dnd: "🔴",
             discord.Status.offline: "⚫"
@@ -92,35 +92,35 @@ class Info(commands.Cog):
 
         badges = []
         flags = member.public_flags
-        if flags.staff: badges.append("👨‍💼 Discord Staff")
+        if flags.staff: badges.append("<:strangerz_girl_staff:1523386969101697174>‍💼 Discord Staff")
         if flags.partner: badges.append("🤝 Partner")
         if flags.bug_hunter: badges.append("🐛 Bug Hunter")
         if flags.early_supporter: badges.append("⭐ Early Supporter")
-        if flags.verified_bot_developer: badges.append("🔧 Bot Dev")
-        if flags.hypesquad_balance: badges.append("⚖️ HypeSquad Balance")
+        if flags.verified_bot_developer: badges.append("<a:Mod:1520895258118983743> Bot Dev")
+        if flags.hypesquad_balance: badges.append("<:Moderator:1520896609431457852> HypeSquad Balance")
         if flags.hypesquad_bravery: badges.append("🔥 HypeSquad Bravery")
         if flags.hypesquad_brilliance: badges.append("💡 HypeSquad Brilliance")
         if member.bot: badges.append("🤖 Bot")
-        if member.premium_since: badges.append("💎 Nitro Booster")
+        if member.premium_since: badges.append("<a:rizz_blacky_hearts:1523386407651905769> Nitro Booster")
 
         embed = discord.Embed(
-            title=f"👤 {member}",
+            title=f"<:strangerz_girl_staff:1523386969101697174> {member}",
             color=member.color.value if member.color.value else 0x5865F2,
             timestamp=datetime.utcnow()
         )
         embed.set_thumbnail(url=member.display_avatar.url)
 
         embed.add_field(name="🆔 User ID", value=str(member.id), inline=True)
-        embed.add_field(name="🏷️ Nickname", value=member.nick or "None", inline=True)
+        embed.add_field(name="<:rank:1523386967511793824> Nickname", value=member.nick or "None", inline=True)
         embed.add_field(name=f"{status_icon} Status", value=member.status.name.title(), inline=True)
         embed.add_field(name="📅 Account Created", value=format_date(member.created_at), inline=False)
         embed.add_field(name="📥 Joined Server", value=format_date(member.joined_at) if member.joined_at else "Unknown", inline=False)
 
         if member.premium_since:
-            embed.add_field(name="💎 Boosting Since", value=format_date(member.premium_since), inline=False)
+            embed.add_field(name="<a:rizz_blacky_hearts:1523386407651905769> Boosting Since", value=format_date(member.premium_since), inline=False)
 
         if badges:
-            embed.add_field(name="🏅 Badges", value=" | ".join(badges), inline=False)
+            embed.add_field(name="<a:rizz_rewards:1523620313689100320> Badges", value=" | ".join(badges), inline=False)
 
         if roles:
             roles_text = " ".join(roles[:20])
@@ -172,7 +172,7 @@ class Info(commands.Cog):
         member = member or ctx.author
         fetched = await self.bot.fetch_user(member.id)
         if not fetched.banner:
-            return await ctx.send(embed=make_embed(f"❌ **{member}** doesn't have a banner.", self.bot.error_color))
+            return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> **{member}** doesn't have a banner.", self.bot.error_color))
         embed = discord.Embed(title=f"🖼️ {member}'s Banner", color=0x5865F2)
         embed.set_image(url=fetched.banner.with_size(1024).url)
         await ctx.send(embed=embed)
@@ -195,9 +195,9 @@ class Info(commands.Cog):
         embed.add_field(name="🎨 Color", value=f"#{role.color.value:06X}", inline=True)
         embed.add_field(name="📌 Position", value=str(role.position), inline=True)
         embed.add_field(name="📅 Created", value=format_date(role.created_at), inline=False)
-        embed.add_field(name="👥 Members", value=str(len(role.members)), inline=True)
+        embed.add_field(name="<:strangerz_girl_staff:1523386969101697174> Members", value=str(len(role.members)), inline=True)
         embed.add_field(name="🤖 Bot Role", value="Yes" if role.is_bot_managed() else "No", inline=True)
-        embed.add_field(name="💎 Booster Role", value="Yes" if role.is_premium_subscriber() else "No", inline=True)
+        embed.add_field(name="<a:rizz_blacky_hearts:1523386407651905769> Booster Role", value="Yes" if role.is_premium_subscriber() else "No", inline=True)
         embed.add_field(name="🔔 Mentionable", value="Yes" if role.mentionable else "No", inline=True)
         embed.add_field(name="📤 Hoisted", value="Yes" if role.hoist else "No", inline=True)
         if key_perms:
@@ -248,9 +248,9 @@ class Info(commands.Cog):
             timestamp=datetime.utcnow()
         )
         embed.set_thumbnail(url=self.bot.user.display_avatar.url)
-        embed.add_field(name="👤 Owner", value=f"<@{list(self.bot.owner_ids)[0]}>" if self.bot.owner_ids else "Unknown", inline=True)
+        embed.add_field(name="<:strangerz_girl_staff:1523386969101697174> Owner", value=f"<@{list(self.bot.owner_ids)[0]}>" if self.bot.owner_ids else "Unknown", inline=True)
         embed.add_field(name="🌐 Servers", value=str(len(self.bot.guilds)), inline=True)
-        embed.add_field(name="👥 Users", value=f"{sum(g.member_count for g in self.bot.guilds):,}", inline=True)
+        embed.add_field(name="<:strangerz_girl_staff:1523386969101697174> Users", value=f"{sum(g.member_count for g in self.bot.guilds):,}", inline=True)
         embed.add_field(name="⚙️ Commands", value=str(len(list(self.bot.commands))), inline=True)
         embed.add_field(name="🏓 Latency", value=f"{round(self.bot.latency * 1000)}ms", inline=True)
         embed.add_field(name="⏱️ Uptime", value=uptime_str, inline=True)
@@ -267,8 +267,8 @@ class Info(commands.Cog):
         member = member or ctx.author
         channel = channel or ctx.channel
         perms = channel.permissions_for(member)
-        allowed = [f"✅ {p.replace('_', ' ').title()}" for p, v in perms if v]
-        denied = [f"❌ {p.replace('_', ' ').title()}" for p, v in perms if not v]
+        allowed = [f"<a:tick:1523383850749792397> {p.replace('_', ' ').title()}" for p, v in perms if v]
+        denied = [f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> {p.replace('_', ' ').title()}" for p, v in perms if not v]
 
         embed = discord.Embed(
             title=f"🔐 Permissions for {member} in #{channel.name}",
@@ -293,7 +293,7 @@ class Info(commands.Cog):
             pages.append(" ".join(str(e) for e in chunk))
 
         embed = discord.Embed(
-            title=f"😀 Server Emojis ({len(emojis)})",
+            title=f"<:xD:1520896591542878219> Server Emojis ({len(emojis)})",
             description=pages[0] if pages else "None",
             color=0x5865F2
         )

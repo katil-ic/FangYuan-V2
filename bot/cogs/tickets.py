@@ -28,12 +28,12 @@ class TicketCloseView(discord.ui.View):
         ticket_data = cfg.get(guild_id, {}).get("open_tickets", {}).get(channel_id)
 
         if not ticket_data:
-            return await interaction.response.send_message("❌ This doesn't look like an active ticket.", ephemeral=True)
+            return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> This doesn't look like an active ticket.", ephemeral=True)
 
         is_staff = interaction.user.guild_permissions.manage_channels
         is_owner = str(interaction.user.id) == ticket_data.get("user_id")
         if not is_staff and not is_owner:
-            return await interaction.response.send_message("❌ Only staff or the ticket owner can close this.", ephemeral=True)
+            return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Only staff or the ticket owner can close this.", ephemeral=True)
 
         await interaction.response.send_message(embed=make_embed("🔒 Closing ticket in 5 seconds...", 0xED4245))
         await asyncio.sleep(5)
@@ -82,7 +82,7 @@ class TicketCloseView(discord.ui.View):
     @discord.ui.button(label="📋 Transcript", style=discord.ButtonStyle.secondary, custom_id="ticket:transcript")
     async def get_transcript(self, interaction: discord.Interaction, button: discord.ui.Button):
         if not interaction.user.guild_permissions.manage_channels:
-            return await interaction.response.send_message("❌ Staff only.", ephemeral=True)
+            return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Staff only.", ephemeral=True)
         await interaction.response.defer(ephemeral=True)
         lines = []
         async for msg in interaction.channel.history(limit=500, oldest_first=True):
@@ -92,10 +92,10 @@ class TicketCloseView(discord.ui.View):
         file = discord.File(io.StringIO(transcript), filename=f"transcript-{interaction.channel.name}.txt")
         await interaction.followup.send(file=file, ephemeral=True)
 
-    @discord.ui.button(label="➕ Add User", style=discord.ButtonStyle.primary, custom_id="ticket:adduser")
+    @discord.ui.button(label="<a:pink_arrow_haveli:1523620310124068985> Add User", style=discord.ButtonStyle.primary, custom_id="ticket:adduser")
     async def add_user(self, interaction: discord.Interaction, button: discord.ui.Button):
         if not interaction.user.guild_permissions.manage_channels:
-            return await interaction.response.send_message("❌ Staff only.", ephemeral=True)
+            return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Staff only.", ephemeral=True)
         await interaction.response.send_message("Mention the user(s) to add (e.g. `@User`):", ephemeral=True)
 
         def check(m):
@@ -105,7 +105,7 @@ class TicketCloseView(discord.ui.View):
             msg = await interaction.client.wait_for("message", check=check, timeout=30)
             for mention in msg.mentions:
                 await interaction.channel.set_permissions(mention, read_messages=True, send_messages=True)
-            await interaction.channel.send(embed=make_embed(f"✅ Added {', '.join(m.mention for m in msg.mentions)} to the ticket.", 0x57F287))
+            await interaction.channel.send(embed=make_embed(f"<a:tick:1523383850749792397> Added {', '.join(m.mention for m in msg.mentions)} to the ticket.", 0x57F287))
         except asyncio.TimeoutError:
             pass
 
@@ -133,7 +133,7 @@ class TicketOpenView(discord.ui.View):
                 ch = guild.get_channel(int(ch_id))
                 if ch:
                     return await interaction.response.send_message(
-                        f"❌ You already have an open ticket: {ch.mention}", ephemeral=True
+                        f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> You already have an open ticket: {ch.mention}", ephemeral=True
                     )
 
         # Determine category
@@ -191,7 +191,7 @@ class TicketOpenView(discord.ui.View):
         else:
             await channel.send(embed=embed, view=TicketCloseView(self.bot))
 
-        await interaction.response.send_message(f"✅ Ticket created: {channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"<a:tick:1523383850749792397> Ticket created: {channel.mention}", ephemeral=True)
 
 
 class Tickets(commands.Cog):
@@ -242,7 +242,7 @@ class Tickets(commands.Cog):
 
         save_json(TICKET_CONFIG_FILE, cfg)
 
-        embed = discord.Embed(title="✅ Ticket System Configured", color=self.bot.success_color)
+        embed = discord.Embed(title="<a:tick:1523383850749792397> Ticket System Configured", color=self.bot.success_color)
         embed.add_field(name="Category", value=category.mention if category else "Not set", inline=True)
         embed.add_field(name="Support Role", value=support_role.mention if support_role else "Not set", inline=True)
         embed.add_field(name="Log Channel", value=log_channel.mention if log_channel else "Not set", inline=True)
@@ -253,14 +253,14 @@ class Tickets(commands.Cog):
     async def addtoticket(self, ctx, member: discord.Member):
         """Add a user to the current ticket."""
         await ctx.channel.set_permissions(member, read_messages=True, send_messages=True, attach_files=True)
-        await ctx.send(embed=make_embed(f"✅ Added {member.mention} to the ticket.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Added {member.mention} to the ticket.", self.bot.success_color))
 
     @commands.hybrid_command(name="removefromticket")
     @commands.has_permissions(manage_channels=True)
     async def removefromticket(self, ctx, member: discord.Member):
         """Remove a user from the current ticket."""
         await ctx.channel.set_permissions(member, overwrite=None)
-        await ctx.send(embed=make_embed(f"✅ Removed {member.mention} from the ticket.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Removed {member.mention} from the ticket.", self.bot.success_color))
 
     @commands.hybrid_command(name="ticketstats")
     @commands.has_permissions(manage_channels=True)

@@ -37,7 +37,7 @@ class Welcome(commands.Cog):
 
                 embed = discord.Embed(
                     title=w_cfg.get("title", f"Welcome to {member.guild.name}!"),
-                    description=msg or f"Welcome {member.mention} to **{member.guild.name}**! 🎉\nYou are member **#{member.guild.member_count}**.",
+                    description=msg or f"Welcome {member.mention} to **{member.guild.name}**! <a:ri_tada:1523620315325010092>\nYou are member **#{member.guild.member_count}**.",
                     color=int(w_cfg.get("color", "0x57F287"), 16) if isinstance(w_cfg.get("color"), str) else w_cfg.get("color", 0x57F287),
                     timestamp=datetime.utcnow()
                 )
@@ -117,8 +117,8 @@ class Welcome(commands.Cog):
         cfg = load_json(WELCOME_FILE)
         g_cfg = cfg.get(str(ctx.guild.id), {})
         w_cfg = g_cfg.get("welcome", {})
-        embed = discord.Embed(title="🎉 Welcome System", color=0x5865F2)
-        embed.add_field(name="Status", value="✅ Enabled" if w_cfg.get("enabled") else "❌ Disabled", inline=True)
+        embed = discord.Embed(title="<a:ri_tada:1523620315325010092> Welcome System", color=0x5865F2)
+        embed.add_field(name="Status", value="<a:tick:1523383850749792397> Enabled" if w_cfg.get("enabled") else "<:Xieron_stolen_emoji_1774597520:1520895245733204039> Disabled", inline=True)
         channel_id = w_cfg.get("channel_id")
         channel = ctx.guild.get_channel(int(channel_id)) if channel_id else None
         embed.add_field(name="Channel", value=channel.mention if channel else "Not set", inline=True)
@@ -144,44 +144,44 @@ class Welcome(commands.Cog):
     @commands.has_permissions(manage_guild=True)
     async def welcome_setchannel(self, ctx, channel: discord.TextChannel):
         self._update(str(ctx.guild.id), "welcome", {"channel_id": str(channel.id)})
-        await ctx.send(embed=make_embed(f"✅ Welcome channel set to {channel.mention}.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Welcome channel set to {channel.mention}.", self.bot.success_color))
 
     @welcome_group.command(name="setmessage")
     @commands.has_permissions(manage_guild=True)
     async def welcome_setmessage(self, ctx, *, message: str):
         self._update(str(ctx.guild.id), "welcome", {"message": message})
-        await ctx.send(embed=make_embed(f"✅ Welcome message updated.\n> {message}", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Welcome message updated.\n> {message}", self.bot.success_color))
 
     @welcome_group.command(name="settitle")
     @commands.has_permissions(manage_guild=True)
     async def welcome_settitle(self, ctx, *, title: str):
         self._update(str(ctx.guild.id), "welcome", {"title": title})
-        await ctx.send(embed=make_embed(f"✅ Welcome title set to: **{title}**", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Welcome title set to: **{title}**", self.bot.success_color))
 
     @welcome_group.command(name="enable")
     @commands.has_permissions(manage_guild=True)
     async def welcome_enable(self, ctx):
         self._update(str(ctx.guild.id), "welcome", {"enabled": True})
-        await ctx.send(embed=make_embed("✅ Welcome system enabled.", self.bot.success_color))
+        await ctx.send(embed=make_embed("<a:tick:1523383850749792397> Welcome system enabled.", self.bot.success_color))
 
     @welcome_group.command(name="disable")
     @commands.has_permissions(manage_guild=True)
     async def welcome_disable(self, ctx):
         self._update(str(ctx.guild.id), "welcome", {"enabled": False})
-        await ctx.send(embed=make_embed("✅ Welcome system disabled.", self.bot.success_color))
+        await ctx.send(embed=make_embed("<a:tick:1523383850749792397> Welcome system disabled.", self.bot.success_color))
 
     @welcome_group.command(name="ping")
     @commands.has_permissions(manage_guild=True)
     async def welcome_ping(self, ctx, toggle: str):
         val = toggle.lower() in ("on", "yes", "true", "enable")
         self._update(str(ctx.guild.id), "welcome", {"ping_user": val})
-        await ctx.send(embed=make_embed(f"✅ User ping {'enabled' if val else 'disabled'}.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> User ping {'enabled' if val else 'disabled'}.", self.bot.success_color))
 
     @welcome_group.command(name="test")
     @commands.has_permissions(manage_guild=True)
     async def welcome_test(self, ctx):
         await self.on_member_join(ctx.author)
-        await ctx.send(embed=make_embed("✅ Sent test welcome message.", self.bot.success_color))
+        await ctx.send(embed=make_embed("<a:tick:1523383850749792397> Sent test welcome message.", self.bot.success_color))
 
     @welcome_group.command(name="setcolor")
     @commands.has_permissions(manage_guild=True)
@@ -189,9 +189,9 @@ class Welcome(commands.Cog):
         try:
             int(color.replace("#", "0x"), 16)
         except ValueError:
-            return await ctx.send(embed=make_embed("❌ Invalid color. Use hex like `#57F287`.", self.bot.error_color))
+            return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Invalid color. Use hex like `#57F287`.", self.bot.error_color))
         self._update(str(ctx.guild.id), "welcome", {"color": color.replace("#", "0x")})
-        await ctx.send(embed=make_embed(f"✅ Welcome color set to `{color}`.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Welcome color set to `{color}`.", self.bot.success_color))
 
     # ─── LEAVE ────────────────────────────────────────────────────────────────
 
@@ -204,31 +204,31 @@ class Welcome(commands.Cog):
     @commands.has_permissions(manage_guild=True)
     async def leave_setchannel(self, ctx, channel: discord.TextChannel):
         self._update(str(ctx.guild.id), "leave", {"channel_id": str(channel.id)})
-        await ctx.send(embed=make_embed(f"✅ Leave channel set to {channel.mention}.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Leave channel set to {channel.mention}.", self.bot.success_color))
 
     @leave_group.command(name="setmessage")
     @commands.has_permissions(manage_guild=True)
     async def leave_setmessage(self, ctx, *, message: str):
         self._update(str(ctx.guild.id), "leave", {"message": message})
-        await ctx.send(embed=make_embed(f"✅ Leave message updated.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Leave message updated.", self.bot.success_color))
 
     @leave_group.command(name="enable")
     @commands.has_permissions(manage_guild=True)
     async def leave_enable(self, ctx):
         self._update(str(ctx.guild.id), "leave", {"enabled": True})
-        await ctx.send(embed=make_embed("✅ Leave system enabled.", self.bot.success_color))
+        await ctx.send(embed=make_embed("<a:tick:1523383850749792397> Leave system enabled.", self.bot.success_color))
 
     @leave_group.command(name="disable")
     @commands.has_permissions(manage_guild=True)
     async def leave_disable(self, ctx):
         self._update(str(ctx.guild.id), "leave", {"enabled": False})
-        await ctx.send(embed=make_embed("✅ Leave system disabled.", self.bot.success_color))
+        await ctx.send(embed=make_embed("<a:tick:1523383850749792397> Leave system disabled.", self.bot.success_color))
 
     @leave_group.command(name="test")
     @commands.has_permissions(manage_guild=True)
     async def leave_test(self, ctx):
         await self.on_member_remove(ctx.author)
-        await ctx.send(embed=make_embed("✅ Sent test leave message.", self.bot.success_color))
+        await ctx.send(embed=make_embed("<a:tick:1523383850749792397> Sent test leave message.", self.bot.success_color))
 
     # ─── AUTO-ROLE ────────────────────────────────────────────────────────────
 
@@ -256,7 +256,7 @@ class Welcome(commands.Cog):
         if str(role.id) not in cfg[guild_id]["autoroles"]:
             cfg[guild_id]["autoroles"].append(str(role.id))
             save_json(WELCOME_FILE, cfg)
-        await ctx.send(embed=make_embed(f"✅ Added {role.mention} to auto-roles.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Added {role.mention} to auto-roles.", self.bot.success_color))
 
     @autorole_group.command(name="remove")
     @commands.has_permissions(manage_roles=True)
@@ -268,7 +268,7 @@ class Welcome(commands.Cog):
             roles.remove(str(role.id))
             cfg[guild_id]["autoroles"] = roles
             save_json(WELCOME_FILE, cfg)
-        await ctx.send(embed=make_embed(f"✅ Removed {role.mention} from auto-roles.", self.bot.success_color))
+        await ctx.send(embed=make_embed(f"<a:tick:1523383850749792397> Removed {role.mention} from auto-roles.", self.bot.success_color))
 
     # ─── DM WELCOME ───────────────────────────────────────────────────────────
 
@@ -281,19 +281,19 @@ class Welcome(commands.Cog):
     @commands.has_permissions(manage_guild=True)
     async def dmwelcome_set(self, ctx, *, message: str):
         self._update(str(ctx.guild.id), "dm_welcome", {"message": message, "enabled": True})
-        await ctx.send(embed=make_embed("✅ DM welcome message set.", self.bot.success_color))
+        await ctx.send(embed=make_embed("<a:tick:1523383850749792397> DM welcome message set.", self.bot.success_color))
 
     @dmwelcome_group.command(name="enable")
     @commands.has_permissions(manage_guild=True)
     async def dmwelcome_enable(self, ctx):
         self._update(str(ctx.guild.id), "dm_welcome", {"enabled": True})
-        await ctx.send(embed=make_embed("✅ DM welcome enabled.", self.bot.success_color))
+        await ctx.send(embed=make_embed("<a:tick:1523383850749792397> DM welcome enabled.", self.bot.success_color))
 
     @dmwelcome_group.command(name="disable")
     @commands.has_permissions(manage_guild=True)
     async def dmwelcome_disable(self, ctx):
         self._update(str(ctx.guild.id), "dm_welcome", {"enabled": False})
-        await ctx.send(embed=make_embed("✅ DM welcome disabled.", self.bot.success_color))
+        await ctx.send(embed=make_embed("<a:tick:1523383850749792397> DM welcome disabled.", self.bot.success_color))
 
     # ─── HELPERS ──────────────────────────────────────────────────────────────
 
