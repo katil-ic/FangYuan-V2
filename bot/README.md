@@ -45,14 +45,82 @@ Chain is auto-detected from the address format if not specified.
 
 ---
 
-## 🚀 Installation
+## 🚀 Hosting on Railway (Recommended — Free)
+
+Railway is the easiest way to host your bot 24/7 for free.
+
+### Step 1 — Create a GitHub repo
+
+1. Go to [github.com](https://github.com) → **New repository**
+2. Name it `fangyuan-v2` (private is fine)
+3. Do **not** add a README (keep it empty)
+
+### Step 2 — Upload the bot files
+
+You have two options:
+
+**Option A — GitHub web upload (easiest, no Git needed):**
+1. Open your new repo on GitHub
+2. Click **Add file → Upload files**
+3. Drag and drop **all files from inside this ZIP** (not the ZIP itself)
+4. Click **Commit changes**
+
+**Option B — Git CLI:**
+```bash
+unzip FangYuanV2.zip
+cd bot
+git init
+git remote add origin https://github.com/YOURUSERNAME/fangyuan-v2.git
+git add .
+git commit -m "initial commit"
+git push -u origin main
+```
+
+### Step 3 — Deploy on Railway
+
+1. Go to [railway.app](https://railway.app) and sign in with GitHub
+2. Click **New Project → Deploy from GitHub repo**
+3. Select your `fangyuan-v2` repo
+4. Railway will detect Python automatically — click **Deploy**
+
+### Step 4 — Set environment variables
+
+In your Railway project:
+1. Click on your service → **Variables** tab
+2. Add these variables one by one:
+
+| Variable | Value |
+|---|---|
+| `TOKEN` | Your Discord bot token |
+| `PREFIX` | `!` (or your choice) |
+| `OWNER_IDS` | Your Discord user ID |
+| `ETHERSCAN_API_KEY` | From etherscan.io/apis (optional) |
+| `BSCSCAN_API_KEY` | From bscscan.com/apis (optional) |
+| `POLYGONSCAN_API_KEY` | From polygonscan.com/apis (optional) |
+
+3. Railway will automatically redeploy after you add variables
+
+### Step 5 — Done! ✅
+
+Click **Deployments** tab and watch the logs. You should see:
+```
+Logged in as FangYuan V2#XXXX
+Synced slash commands
+Bot is ready!
+```
+
+> **Railway free tier** gives you $5/month of free credits — enough to run a Discord bot 24/7 all month.
+
+---
+
+## 💻 Local / Pterodactyl Setup
 
 ### Prerequisites
 - Python 3.10+
 - A Discord bot token from [Discord Developer Portal](https://discord.com/developers/applications)
 - (Optional) Etherscan/BscScan/PolygonScan API keys for EVM chain support
 
-### Setup
+### Local Setup
 
 ```bash
 # 1. Install dependencies
