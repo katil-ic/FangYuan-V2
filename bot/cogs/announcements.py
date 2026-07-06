@@ -14,7 +14,7 @@ class Announcements(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="announce", aliases=["ann", "announcement"])
+    @commands.hybrid_command(name="announce", aliases=["ann", "announcement"])
     @commands.has_permissions(manage_guild=True)
     async def announce(self, ctx, channel: discord.TextChannel, *, message: str):
         """Send a plain announcement to a channel."""
@@ -33,7 +33,7 @@ class Announcements(commands.Cog):
         except Exception:
             pass
 
-    @commands.command(name="announceembed", aliases=["annedbed", "announcee"])
+    @commands.hybrid_command(name="announceembed", aliases=["annedbed", "announcee"])
     @commands.has_permissions(manage_guild=True)
     async def announce_embed(self, ctx, channel: discord.TextChannel, ping: str = "none", *, message: str):
         """
@@ -68,7 +68,7 @@ class Announcements(commands.Cog):
         except Exception:
             pass
 
-    @commands.command(name="annrole", aliases=["announcerole"])
+    @commands.hybrid_command(name="annrole", aliases=["announcerole"])
     @commands.has_permissions(manage_guild=True)
     async def announce_role(self, ctx, channel: discord.TextChannel, role: discord.Role, *, message: str):
         """Send an announcement pinging a specific role."""
@@ -87,7 +87,7 @@ class Announcements(commands.Cog):
         except Exception:
             pass
 
-    @commands.command(name="broadcast", aliases=["bcast"])
+    @commands.hybrid_command(name="broadcast", aliases=["bcast"])
     @commands.has_permissions(administrator=True)
     async def broadcast(self, ctx, *, message: str):
         """Broadcast a message to ALL text channels the bot can send to."""
@@ -121,7 +121,7 @@ class Announcements(commands.Cog):
 
         await confirm_msg.edit(embed=make_embed(f"✅ Broadcast complete! Sent to **{sent}** channels. Failed: **{failed}**.", self.bot.success_color))
 
-    @commands.command(name="setannchannel", aliases=["annchannel"])
+    @commands.hybrid_command(name="setannchannel", aliases=["annchannel"])
     @commands.has_permissions(manage_guild=True)
     async def set_ann_channel(self, ctx, channel: discord.TextChannel):
         """Set the default announcement channel."""
@@ -133,7 +133,7 @@ class Announcements(commands.Cog):
         save_json(ANN_FILE, cfg)
         await ctx.send(embed=make_embed(f"✅ Announcement channel set to {channel.mention}.", self.bot.success_color))
 
-    @commands.command(name="quickann", aliases=["qa"])
+    @commands.hybrid_command(name="quickann", aliases=["qa"])
     @commands.has_permissions(manage_guild=True)
     async def quickann(self, ctx, *, message: str):
         """Send announcement to the configured announcement channel."""
@@ -161,7 +161,7 @@ class Announcements(commands.Cog):
         except Exception:
             pass
 
-    @commands.command(name="updatelog", aliases=["changelog"])
+    @commands.hybrid_command(name="updatelog", aliases=["changelog"])
     @commands.has_permissions(manage_guild=True)
     async def updatelog(self, ctx, channel: discord.TextChannel, version: str, *, changes: str):
         """Send a formatted changelog/update announcement."""

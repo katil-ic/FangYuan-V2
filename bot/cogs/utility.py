@@ -19,7 +19,7 @@ class Utility(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="help", aliases=["h", "commands"])
+    @commands.hybrid_command(name="help", aliases=["h", "commands"])
     async def help_command(self, ctx, *, command_name: str = None):
         """Show all commands or help for a specific command."""
         prefix = os.getenv("PREFIX", "!")
@@ -90,7 +90,7 @@ class Utility(commands.Cog):
         embed.set_footer(text=f"FangYuan V2 • {len(list(self.bot.commands))} commands loaded")
         await ctx.send(embed=embed)
 
-    @commands.command(name="ping")
+    @commands.hybrid_command(name="ping")
     async def ping(self, ctx):
         """Check bot latency."""
         start = time.perf_counter()
@@ -106,7 +106,7 @@ class Utility(commands.Cog):
         embed.add_field(name="Quality", value=quality, inline=True)
         await msg.edit(embed=embed)
 
-    @commands.command(name="uptime")
+    @commands.hybrid_command(name="uptime")
     async def uptime(self, ctx):
         """Show bot uptime."""
         delta = timedelta(seconds=int(time.time() - START_TIME))
@@ -118,7 +118,7 @@ class Utility(commands.Cog):
         embed.add_field(name="Started At", value=f"<t:{int(START_TIME)}:F>", inline=False)
         await ctx.send(embed=embed)
 
-    @commands.command(name="remind", aliases=["reminder", "remindme"])
+    @commands.hybrid_command(name="remind", aliases=["reminder", "remindme"])
     async def remind(self, ctx, duration: str, *, reminder: str):
         """Set a reminder. Usage: !remind 10m Take a break"""
         units = {"s": 1, "m": 60, "h": 3600, "d": 86400}
@@ -164,7 +164,7 @@ class Utility(commands.Cog):
             return
         self._edit_snipe_cache[before.channel.id] = (before, after)
 
-    @commands.command(name="snipe", aliases=["s"])
+    @commands.hybrid_command(name="snipe", aliases=["s"])
     @commands.has_permissions(manage_messages=True)
     async def snipe(self, ctx):
         """Snipe the last deleted message in this channel."""
@@ -182,7 +182,7 @@ class Utility(commands.Cog):
             embed.set_image(url=msg.attachments[0].url)
         await ctx.send(embed=embed)
 
-    @commands.command(name="editsnipe", aliases=["esnipe"])
+    @commands.hybrid_command(name="editsnipe", aliases=["esnipe"])
     @commands.has_permissions(manage_messages=True)
     async def editsnipe(self, ctx):
         """Snipe the last edited message in this channel."""
@@ -201,7 +201,7 @@ class Utility(commands.Cog):
 
     _afk_data = {}
 
-    @commands.command(name="afk")
+    @commands.hybrid_command(name="afk")
     async def afk(self, ctx, *, reason: str = "AFK"):
         """Set your AFK status."""
         self._afk_data[ctx.author.id] = {
@@ -218,7 +218,7 @@ class Utility(commands.Cog):
         except Exception:
             pass
 
-    @commands.command(name="afklist")
+    @commands.hybrid_command(name="afklist")
     async def afklist(self, ctx):
         """Show all AFK users in this server."""
         afk_members = {uid: data for uid, data in self._afk_data.items() if ctx.guild.get_member(uid)}
@@ -260,7 +260,7 @@ class Utility(commands.Cog):
                 embed = make_embed(f"💤 **{user.display_name}** is AFK: {data['reason']} ({minutes}m ago)", 0xFEE75C)
                 await message.channel.send(embed=embed, delete_after=10)
 
-    @commands.command(name="inviteinfo", aliases=["invite"])
+    @commands.hybrid_command(name="inviteinfo", aliases=["invite"])
     async def inviteinfo(self, ctx, code: str = None):
         """Get info about a Discord invite link."""
         if not code:
@@ -292,7 +292,7 @@ class Utility(commands.Cog):
         except discord.NotFound:
             await ctx.send(embed=make_embed("❌ Invalid or expired invite.", self.bot.error_color))
 
-    @commands.command(name="membercount", aliases=["mc"])
+    @commands.hybrid_command(name="membercount", aliases=["mc"])
     async def membercount(self, ctx):
         """Show server member counts."""
         guild = ctx.guild
@@ -310,7 +310,7 @@ class Utility(commands.Cog):
             embed.set_thumbnail(url=guild.icon.url)
         await ctx.send(embed=embed)
 
-    @commands.command(name="charinfo")
+    @commands.hybrid_command(name="charinfo")
     async def charinfo(self, ctx, *, characters: str):
         """Get Unicode info about characters."""
         if len(characters) > 20:
@@ -322,7 +322,7 @@ class Utility(commands.Cog):
             lines.append(f"`\\U{cp:08X}` — **{name}** — `{char}`")
         await ctx.send(embed=discord.Embed(description="\n".join(lines), color=0x5865F2))
 
-    @commands.command(name="timestamp", aliases=["ts"])
+    @commands.hybrid_command(name="timestamp", aliases=["ts"])
     async def timestamp(self, ctx, *, dt_str: str = None):
         """Convert a date string to Discord timestamps."""
         if not dt_str:

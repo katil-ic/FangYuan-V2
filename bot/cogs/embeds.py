@@ -175,7 +175,7 @@ class Embeds(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="embed", aliases=["embedbuilder", "eb"])
+    @commands.hybrid_command(name="embed", aliases=["embedbuilder", "eb"])
     @commands.has_permissions(manage_messages=True)
     async def embed_command(self, ctx):
         """Open the interactive embed builder."""
@@ -191,7 +191,7 @@ class Embeds(commands.Cog):
         except Exception:
             pass
 
-    @commands.command(name="embedsend")
+    @commands.hybrid_command(name="embedsend")
     @commands.has_permissions(manage_messages=True)
     async def embedsend(self, ctx, channel: discord.TextChannel, *, json_text: str):
         """Send a raw JSON embed to a channel. Use `!embedjson` to get the format."""
@@ -205,7 +205,7 @@ class Embeds(commands.Cog):
         except Exception as e:
             await ctx.send(embed=make_embed(f"❌ Error: {e}", self.bot.error_color))
 
-    @commands.command(name="embeds", aliases=["savedembeds"])
+    @commands.hybrid_command(name="embeds", aliases=["savedembeds"])
     @commands.has_permissions(manage_messages=True)
     async def list_embeds(self, ctx):
         """List all saved embeds for this server."""
@@ -218,7 +218,7 @@ class Embeds(commands.Cog):
         embed.description = "\n".join(f"• `{name}` — !embedload {name}" for name in embeds.keys())
         await ctx.send(embed=embed)
 
-    @commands.command(name="embedload")
+    @commands.hybrid_command(name="embedload")
     @commands.has_permissions(manage_messages=True)
     async def embedload(self, ctx, name: str, channel: discord.TextChannel = None):
         """Load and send a saved embed."""
@@ -232,7 +232,7 @@ class Embeds(commands.Cog):
         await target.send(embed=embed)
         await ctx.send(embed=make_embed(f"✅ Embed `{name}` sent to {target.mention}.", self.bot.success_color))
 
-    @commands.command(name="embeddelete")
+    @commands.hybrid_command(name="embeddelete")
     @commands.has_permissions(manage_messages=True)
     async def embeddelete(self, ctx, name: str):
         """Delete a saved embed."""
@@ -245,7 +245,7 @@ class Embeds(commands.Cog):
         else:
             await ctx.send(embed=make_embed(f"❌ No embed named `{name}`.", self.bot.error_color))
 
-    @commands.command(name="say")
+    @commands.hybrid_command(name="say")
     @commands.has_permissions(manage_messages=True)
     async def say(self, ctx, channel: discord.TextChannel, *, message: str):
         """Send a plain text message to a channel."""
@@ -255,14 +255,17 @@ class Embeds(commands.Cog):
         except Exception:
             pass
 
-    @commands.command(name="sayhere")
+    @commands.hybrid_command(name="sayhere")
     @commands.has_permissions(manage_messages=True)
     async def sayhere(self, ctx, *, message: str):
         """Send a plain text message in the current channel."""
-        await ctx.message.delete()
+        try:
+            await ctx.message.delete()
+        except Exception:
+            pass
         await ctx.send(message)
 
-    @commands.command(name="embedjson")
+    @commands.hybrid_command(name="embedjson")
     @commands.has_permissions(manage_messages=True)
     async def embedjson(self, ctx):
         """Show an example JSON format for embed sending."""
@@ -279,7 +282,7 @@ class Embeds(commands.Cog):
         }
         await ctx.send(f"```json\n{json.dumps(example, indent=2)}\n```\nUse with: `!embedsend #channel <json>`")
 
-    @commands.command(name="editmessage")
+    @commands.hybrid_command(name="editmessage")
     @commands.has_permissions(manage_messages=True)
     async def editmessage(self, ctx, message_id: int, *, new_content: str):
         """Edit a message the bot sent."""
@@ -288,7 +291,10 @@ class Embeds(commands.Cog):
             if msg.author != ctx.guild.me:
                 return await ctx.send(embed=make_embed("❌ I can only edit my own messages.", self.bot.error_color))
             await msg.edit(content=new_content)
-            await ctx.message.delete()
+            try:
+                await ctx.message.delete()
+            except Exception:
+                pass
         except discord.NotFound:
             await ctx.send(embed=make_embed("❌ Message not found.", self.bot.error_color))
 

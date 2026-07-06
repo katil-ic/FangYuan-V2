@@ -101,7 +101,7 @@ class Autoresponder(commands.Cog):
 
     # ─── COMMANDS ─────────────────────────────────────────────────────────────
 
-    @commands.group(name="ar", aliases=["autoresponder", "autoresponse"], invoke_without_command=True)
+    @commands.hybrid_group(name="ar", aliases=["autoresponder", "autoresponse"], invoke_without_command=True)
     @commands.has_permissions(manage_guild=True)
     async def ar_group(self, ctx):
         await self._show_list(ctx)

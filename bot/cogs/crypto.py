@@ -46,7 +46,7 @@ class Crypto(commands.Cog):
 
     # ─── .ball COMMAND (special feature) ──────────────────────────────────────
 
-    @commands.command(name="ball", aliases=["cryptocheck", "addrcheck"])
+    @commands.hybrid_command(name="ball", aliases=["cryptocheck", "addrcheck"])
     async def ball(self, ctx, address: str = None, chain: str = "auto"):
         """
         .ball [address] [chain]
@@ -352,7 +352,7 @@ class Crypto(commands.Cog):
 
     # ─── GENERAL CRYPTO COMMANDS ──────────────────────────────────────────────
 
-    @commands.command(name="cryptoinfo", aliases=["coin", "crypto"])
+    @commands.hybrid_command(name="cryptoinfo", aliases=["coin", "crypto"])
     async def cryptoinfo(self, ctx, symbol: str = "bitcoin"):
         """Get current price and stats for a cryptocurrency."""
         async with aiohttp.ClientSession() as session:
@@ -406,7 +406,7 @@ class Crypto(commands.Cog):
             except Exception as e:
                 await ctx.send(embed=make_embed(f"❌ Error: {e}", self.bot.error_color))
 
-    @commands.command(name="convert", aliases=["cryptoconvert"])
+    @commands.hybrid_command(name="convert", aliases=["cryptoconvert"])
     async def convert(self, ctx, amount: float, from_coin: str, to_coin: str = "usd"):
         """Convert between cryptocurrencies or to USD/EUR."""
         async with aiohttp.ClientSession() as session:
@@ -439,7 +439,7 @@ class Crypto(commands.Cog):
             except Exception as e:
                 await ctx.send(embed=make_embed(f"❌ Error: {e}", self.bot.error_color))
 
-    @commands.command(name="cryptotop", aliases=["topcrypto", "topcoins"])
+    @commands.hybrid_command(name="cryptotop", aliases=["topcrypto", "topcoins"])
     async def cryptotop(self, ctx, limit: int = 10):
         """Show top cryptocurrencies by market cap."""
         limit = max(1, min(limit, 20))
@@ -471,7 +471,7 @@ class Crypto(commands.Cog):
             except Exception as e:
                 await ctx.send(embed=make_embed(f"❌ Error: {e}", self.bot.error_color))
 
-    @commands.command(name="gasfee", aliases=["gas"])
+    @commands.hybrid_command(name="gasfee", aliases=["gas"])
     async def gasfee(self, ctx):
         """Check current ETH gas fees."""
         if not ETHERSCAN_KEY:

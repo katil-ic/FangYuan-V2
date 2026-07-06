@@ -212,7 +212,7 @@ class Giveaway(commands.Cog):
 
     # ─── COMMANDS ─────────────────────────────────────────────────────────────
 
-    @commands.command(name="gstart", aliases=["gcreate", "giveaway"])
+    @commands.hybrid_command(name="gstart", aliases=["gcreate", "giveaway"])
     @commands.has_permissions(manage_guild=True)
     async def gstart(self, ctx, duration: str, winners: str, channel: discord.TextChannel = None, *, prize: str):
         """
@@ -266,7 +266,7 @@ class Giveaway(commands.Cog):
         except Exception:
             pass
 
-    @commands.command(name="gend", aliases=["giveawayend"])
+    @commands.hybrid_command(name="gend", aliases=["giveawayend"])
     @commands.has_permissions(manage_guild=True)
     async def gend(self, ctx, message_id: int = None):
         """End a giveaway early."""
@@ -291,7 +291,7 @@ class Giveaway(commands.Cog):
         await self._end_giveaway(guild, guild_id, msg_id, data)
         await ctx.send(embed=make_embed("✅ Giveaway ended.", self.bot.success_color))
 
-    @commands.command(name="greroll", aliases=["giveawayreroll"])
+    @commands.hybrid_command(name="greroll", aliases=["giveawayreroll"])
     @commands.has_permissions(manage_guild=True)
     async def greroll(self, ctx, message_id: int = None, new_winners: int = None):
         """Reroll a completed giveaway."""
@@ -329,7 +329,7 @@ class Giveaway(commands.Cog):
         )
         await ctx.send(content=winner_text, embed=embed)
 
-    @commands.command(name="glist", aliases=["giveaways"])
+    @commands.hybrid_command(name="glist", aliases=["giveaways"])
     @commands.has_permissions(manage_guild=True)
     async def glist(self, ctx):
         """List all active giveaways in this server."""
@@ -357,7 +357,7 @@ class Giveaway(commands.Cog):
             )
         await ctx.send(embed=embed)
 
-    @commands.command(name="gdelete")
+    @commands.hybrid_command(name="gdelete")
     @commands.has_permissions(administrator=True)
     async def gdelete(self, ctx, message_id: int):
         """Delete a giveaway from the database."""
@@ -371,7 +371,7 @@ class Giveaway(commands.Cog):
         else:
             await ctx.send(embed=make_embed("❌ Giveaway not found.", self.bot.error_color))
 
-    @commands.command(name="ginfo")
+    @commands.hybrid_command(name="ginfo")
     @commands.has_permissions(manage_guild=True)
     async def ginfo(self, ctx, message_id: int):
         """Get info about a giveaway."""

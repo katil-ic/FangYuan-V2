@@ -16,7 +16,7 @@ class Info(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="serverinfo", aliases=["si", "guildinfo"])
+    @commands.hybrid_command(name="serverinfo", aliases=["si", "guildinfo"])
     async def serverinfo(self, ctx):
         """Show detailed server information."""
         g = ctx.guild
@@ -76,7 +76,7 @@ class Info(commands.Cog):
         embed.set_footer(text=f"FangYuan V2 • Shard {ctx.guild.shard_id if ctx.guild.shard_id is not None else 0}")
         await ctx.send(embed=embed)
 
-    @commands.command(name="userinfo", aliases=["ui", "whois", "user"])
+    @commands.hybrid_command(name="userinfo", aliases=["ui", "whois", "user"])
     async def userinfo(self, ctx, member: discord.Member = None):
         """Show detailed user information."""
         member = member or ctx.author
@@ -151,7 +151,7 @@ class Info(commands.Cog):
         embed.set_footer(text="FangYuan V2")
         await ctx.send(embed=embed)
 
-    @commands.command(name="avatar", aliases=["av", "pfp"])
+    @commands.hybrid_command(name="avatar", aliases=["av", "pfp"])
     async def avatar(self, ctx, member: discord.Member = None):
         """Show a user's avatar in full size."""
         member = member or ctx.author
@@ -166,7 +166,7 @@ class Info(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(name="banner")
+    @commands.hybrid_command(name="banner")
     async def banner(self, ctx, member: discord.User = None):
         """Show a user's profile banner."""
         member = member or ctx.author
@@ -177,7 +177,7 @@ class Info(commands.Cog):
         embed.set_image(url=fetched.banner.with_size(1024).url)
         await ctx.send(embed=embed)
 
-    @commands.command(name="roleinfo", aliases=["ri"])
+    @commands.hybrid_command(name="roleinfo", aliases=["ri"])
     async def roleinfo(self, ctx, *, role: discord.Role):
         """Show detailed role information."""
         perms = [p.replace("_", " ").title() for p, v in role.permissions if v]
@@ -204,7 +204,7 @@ class Info(commands.Cog):
             embed.add_field(name="🔑 Key Permissions", value=", ".join(key_perms), inline=False)
         await ctx.send(embed=embed)
 
-    @commands.command(name="channelinfo", aliases=["ci"])
+    @commands.hybrid_command(name="channelinfo", aliases=["ci"])
     async def channelinfo(self, ctx, channel: discord.TextChannel = None):
         """Show detailed channel information."""
         channel = channel or ctx.channel
@@ -223,7 +223,7 @@ class Info(commands.Cog):
             embed.add_field(name="📝 Topic", value=channel.topic[:1024], inline=False)
         await ctx.send(embed=embed)
 
-    @commands.command(name="botinfo", aliases=["bi", "about"])
+    @commands.hybrid_command(name="botinfo", aliases=["bi", "about"])
     async def botinfo(self, ctx):
         """Show information about FangYuan V2."""
         import platform
@@ -261,7 +261,7 @@ class Info(commands.Cog):
         embed.set_footer(text="FangYuan V2 • All-in-One Discord Bot")
         await ctx.send(embed=embed)
 
-    @commands.command(name="permissions", aliases=["perms"])
+    @commands.hybrid_command(name="permissions", aliases=["perms"])
     async def permissions(self, ctx, member: discord.Member = None, channel: discord.TextChannel = None):
         """Show a member's permissions."""
         member = member or ctx.author
@@ -278,7 +278,7 @@ class Info(commands.Cog):
         embed.add_field(name="Denied", value="\n".join(denied[:20]) or "None", inline=True)
         await ctx.send(embed=embed)
 
-    @commands.command(name="emojis", aliases=["emojilist"])
+    @commands.hybrid_command(name="emojis", aliases=["emojilist"])
     async def emojis(self, ctx):
         """List all server emojis."""
         emojis = ctx.guild.emojis

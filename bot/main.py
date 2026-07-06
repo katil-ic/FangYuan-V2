@@ -83,10 +83,11 @@ class FangYuan(commands.Bot):
     async def on_ready(self):
         logger.info(f"Logged in as {self.user} (ID: {self.user.id})")
         logger.info(f"Serving {len(self.guilds)} guild(s)")
+        prefix = os.getenv("PREFIX", "!")
         await self.change_presence(
             activity=discord.Activity(
                 type=discord.ActivityType.watching,
-                name=f"{len(self.guilds)} servers | !help"
+                name=f"{len(self.guilds)} servers | {prefix}help / /help"
             ),
             status=discord.Status.online
         )

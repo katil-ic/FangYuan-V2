@@ -61,7 +61,7 @@ class Polls(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="poll")
+    @commands.hybrid_command(name="poll")
     @commands.has_permissions(manage_messages=True)
     async def poll(self, ctx, duration: str = None, *, question_and_options: str = None):
         """
@@ -215,7 +215,7 @@ class Polls(commands.Cog):
         except Exception:
             pass
 
-    @commands.command(name="quickpoll", aliases=["qp"])
+    @commands.hybrid_command(name="quickpoll", aliases=["qp"])
     async def quickpoll(self, ctx, *, question: str):
         """Create a quick yes/no poll."""
         embed = discord.Embed(
@@ -234,7 +234,7 @@ class Polls(commands.Cog):
         except Exception:
             pass
 
-    @commands.command(name="endpoll")
+    @commands.hybrid_command(name="endpoll")
     @commands.has_permissions(manage_messages=True)
     async def endpoll(self, ctx, message_id: int):
         """Manually end a poll and show results."""
@@ -294,7 +294,7 @@ class Polls(commands.Cog):
 
         await ctx.send(embed=make_embed(f"✅ Poll ended. Winner: **{winner_option}** ({vote_counts.get(winner_emoji, 0)} votes)", self.bot.success_color))
 
-    @commands.command(name="strawpoll")
+    @commands.hybrid_command(name="strawpoll")
     @commands.has_permissions(manage_messages=True)
     async def strawpoll(self, ctx, channel: discord.TextChannel = None, *, question_options: str = None):
         """Send a styled multi-option poll to a specific channel."""

@@ -199,7 +199,7 @@ class Tickets(commands.Cog):
         self.bot = bot
         self.bot.add_view(TicketCloseView(bot))
 
-    @commands.command(name="ticketpanel", aliases=["tpanel"])
+    @commands.hybrid_command(name="ticketpanel", aliases=["tpanel"])
     @commands.has_permissions(administrator=True)
     async def ticketpanel(self, ctx, *, title: str = "Support Tickets"):
         """Send the ticket panel."""
@@ -219,9 +219,12 @@ class Tickets(commands.Cog):
         if ctx.guild.icon:
             embed.set_thumbnail(url=ctx.guild.icon.url)
         await ctx.send(embed=embed, view=TicketOpenView(self.bot))
-        await ctx.message.delete()
+        try:
+            await ctx.message.delete()
+        except Exception:
+            pass
 
-    @commands.command(name="ticketsetup")
+    @commands.hybrid_command(name="ticketsetup")
     @commands.has_permissions(administrator=True)
     async def ticketsetup(self, ctx, category: discord.CategoryChannel = None, support_role: discord.Role = None, log_channel: discord.TextChannel = None):
         """Configure the ticket system."""
@@ -245,21 +248,21 @@ class Tickets(commands.Cog):
         embed.add_field(name="Log Channel", value=log_channel.mention if log_channel else "Not set", inline=True)
         await ctx.send(embed=embed)
 
-    @commands.command(name="addtoticket")
+    @commands.hybrid_command(name="addtoticket")
     @commands.has_permissions(manage_channels=True)
     async def addtoticket(self, ctx, member: discord.Member):
         """Add a user to the current ticket."""
         await ctx.channel.set_permissions(member, read_messages=True, send_messages=True, attach_files=True)
         await ctx.send(embed=make_embed(f"✅ Added {member.mention} to the ticket.", self.bot.success_color))
 
-    @commands.command(name="removefromticket")
+    @commands.hybrid_command(name="removefromticket")
     @commands.has_permissions(manage_channels=True)
     async def removefromticket(self, ctx, member: discord.Member):
         """Remove a user from the current ticket."""
         await ctx.channel.set_permissions(member, overwrite=None)
         await ctx.send(embed=make_embed(f"✅ Removed {member.mention} from the ticket.", self.bot.success_color))
 
-    @commands.command(name="ticketstats")
+    @commands.hybrid_command(name="ticketstats")
     @commands.has_permissions(manage_channels=True)
     async def ticketstats(self, ctx):
         """Show ticket statistics."""

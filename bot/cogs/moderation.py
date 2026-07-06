@@ -20,7 +20,7 @@ class Moderation(commands.Cog):
 
     # ─── BAN ──────────────────────────────────────────────────────────────────
 
-    @commands.command(name="ban", aliases=["b"])
+    @commands.hybrid_command(name="ban", aliases=["b"])
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *, reason="No reason provided"):
@@ -34,7 +34,7 @@ class Moderation(commands.Cog):
         await ctx.send(embed=make_embed(f"🔨 **{member}** has been banned.\nReason: {reason}", self.bot.success_color))
         await self._log(ctx.guild, "Ban", ctx.author, member, reason)
 
-    @commands.command(name="unban")
+    @commands.hybrid_command(name="unban")
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
     async def unban(self, ctx, user_id: int, *, reason="No reason provided"):
@@ -45,7 +45,7 @@ class Moderation(commands.Cog):
         except discord.NotFound:
             await ctx.send(embed=make_embed("❌ That user is not banned.", self.bot.error_color))
 
-    @commands.command(name="tempban", aliases=["tb"])
+    @commands.hybrid_command(name="tempban", aliases=["tb"])
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
     async def tempban(self, ctx, member: discord.Member, duration: str, *, reason="No reason provided"):
@@ -69,7 +69,7 @@ class Moderation(commands.Cog):
 
     # ─── KICK ─────────────────────────────────────────────────────────────────
 
-    @commands.command(name="kick", aliases=["k"])
+    @commands.hybrid_command(name="kick", aliases=["k"])
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason="No reason provided"):
@@ -85,7 +85,7 @@ class Moderation(commands.Cog):
 
     # ─── MUTE / TIMEOUT ───────────────────────────────────────────────────────
 
-    @commands.command(name="mute", aliases=["timeout", "to"])
+    @commands.hybrid_command(name="mute", aliases=["timeout", "to"])
     @commands.has_permissions(moderate_members=True)
     @commands.bot_has_permissions(moderate_members=True)
     async def mute(self, ctx, member: discord.Member, duration: str = "10m", *, reason="No reason provided"):
@@ -97,7 +97,7 @@ class Moderation(commands.Cog):
         await ctx.send(embed=make_embed(f"🔇 **{member}** has been muted for `{duration}`.\nReason: {reason}", self.bot.success_color))
         await self._log(ctx.guild, "Mute", ctx.author, member, reason, extra=f"Duration: {duration}")
 
-    @commands.command(name="unmute", aliases=["untimeout"])
+    @commands.hybrid_command(name="unmute", aliases=["untimeout"])
     @commands.has_permissions(moderate_members=True)
     @commands.bot_has_permissions(moderate_members=True)
     async def unmute(self, ctx, member: discord.Member, *, reason="No reason provided"):
@@ -106,7 +106,7 @@ class Moderation(commands.Cog):
 
     # ─── WARN ─────────────────────────────────────────────────────────────────
 
-    @commands.command(name="warn", aliases=["w"])
+    @commands.hybrid_command(name="warn", aliases=["w"])
     @commands.has_permissions(manage_messages=True)
     async def warn(self, ctx, member: discord.Member, *, reason="No reason provided"):
         warns = load_json(WARNS_FILE)
@@ -133,7 +133,7 @@ class Moderation(commands.Cog):
         await ctx.send(embed=make_embed(f"⚠️ **{member}** has been warned. (Total: **{count}**)\nReason: {reason}", self.bot.warning_color))
         await self._log(ctx.guild, "Warn", ctx.author, member, reason, extra=f"Total Warnings: {count}")
 
-    @commands.command(name="warnings", aliases=["warns", "warnlist"])
+    @commands.hybrid_command(name="warnings", aliases=["warns", "warnlist"])
     @commands.has_permissions(manage_messages=True)
     async def warnings(self, ctx, member: discord.Member):
         warns = load_json(WARNS_FILE)
@@ -157,7 +157,7 @@ class Moderation(commands.Cog):
         embed.set_footer(text=f"Total: {len(user_warns)} warning(s)")
         await ctx.send(embed=embed)
 
-    @commands.command(name="clearwarns", aliases=["warnreset"])
+    @commands.hybrid_command(name="clearwarns", aliases=["warnreset"])
     @commands.has_permissions(administrator=True)
     async def clearwarns(self, ctx, member: discord.Member):
         warns = load_json(WARNS_FILE)
@@ -170,13 +170,16 @@ class Moderation(commands.Cog):
 
     # ─── PURGE ────────────────────────────────────────────────────────────────
 
-    @commands.command(name="purge", aliases=["clear", "prune"])
+    @commands.hybrid_command(name="purge", aliases=["clear", "prune"])
     @commands.has_permissions(manage_messages=True)
     @commands.bot_has_permissions(manage_messages=True)
     async def purge(self, ctx, amount: int, member: discord.Member = None):
         if amount < 1 or amount > 1000:
             return await ctx.send(embed=make_embed("❌ Amount must be between 1 and 1000.", self.bot.error_color))
-        await ctx.message.delete()
+        try:
+            await ctx.message.delete()
+        except Exception:
+            pass
         if member:
             def check(m):
                 return m.author == member
@@ -190,7 +193,7 @@ class Moderation(commands.Cog):
 
     # ─── LOCKDOWN ─────────────────────────────────────────────────────────────
 
-    @commands.command(name="lock", aliases=["lockdown"])
+    @commands.hybrid_command(name="lock", aliases=["lockdown"])
     @commands.has_permissions(manage_channels=True)
     @commands.bot_has_permissions(manage_channels=True)
     async def lock(self, ctx, channel: discord.TextChannel = None, *, reason="No reason"):
@@ -200,7 +203,7 @@ class Moderation(commands.Cog):
         await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
         await ctx.send(embed=make_embed(f"🔒 **{channel.mention}** has been locked.\nReason: {reason}", self.bot.error_color))
 
-    @commands.command(name="unlock")
+    @commands.hybrid_command(name="unlock")
     @commands.has_permissions(manage_channels=True)
     @commands.bot_has_permissions(manage_channels=True)
     async def unlock(self, ctx, channel: discord.TextChannel = None):
@@ -210,7 +213,7 @@ class Moderation(commands.Cog):
         await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
         await ctx.send(embed=make_embed(f"🔓 **{channel.mention}** has been unlocked.", self.bot.success_color))
 
-    @commands.command(name="lockall")
+    @commands.hybrid_command(name="lockall")
     @commands.has_permissions(administrator=True)
     @commands.bot_has_permissions(manage_channels=True)
     async def lockall(self, ctx, *, reason="Server lockdown"):
@@ -227,7 +230,7 @@ class Moderation(commands.Cog):
 
     # ─── SLOWMODE ─────────────────────────────────────────────────────────────
 
-    @commands.command(name="slowmode", aliases=["sm"])
+    @commands.hybrid_command(name="slowmode", aliases=["sm"])
     @commands.has_permissions(manage_channels=True)
     @commands.bot_has_permissions(manage_channels=True)
     async def slowmode(self, ctx, seconds: int = 0):
@@ -241,7 +244,7 @@ class Moderation(commands.Cog):
 
     # ─── NICK ─────────────────────────────────────────────────────────────────
 
-    @commands.command(name="nick", aliases=["nickname"])
+    @commands.hybrid_command(name="nick", aliases=["nickname"])
     @commands.has_permissions(manage_nicknames=True)
     @commands.bot_has_permissions(manage_nicknames=True)
     async def nick(self, ctx, member: discord.Member, *, nickname: str = None):
@@ -254,7 +257,7 @@ class Moderation(commands.Cog):
 
     # ─── ROLE MANAGEMENT ──────────────────────────────────────────────────────
 
-    @commands.command(name="addrole", aliases=["ar"])
+    @commands.hybrid_command(name="addrole", aliases=["ar"])
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def addrole(self, ctx, member: discord.Member, role: discord.Role):
@@ -263,7 +266,7 @@ class Moderation(commands.Cog):
         await member.add_roles(role)
         await ctx.send(embed=make_embed(f"✅ Added {role.mention} to {member.mention}.", self.bot.success_color))
 
-    @commands.command(name="removerole", aliases=["rr"])
+    @commands.hybrid_command(name="removerole", aliases=["rr"])
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def removerole(self, ctx, member: discord.Member, role: discord.Role):
@@ -274,7 +277,7 @@ class Moderation(commands.Cog):
 
     # ─── CHANNEL MANAGEMENT ───────────────────────────────────────────────────
 
-    @commands.command(name="nuke")
+    @commands.hybrid_command(name="nuke")
     @commands.has_permissions(administrator=True)
     @commands.bot_has_permissions(manage_channels=True)
     async def nuke(self, ctx):
@@ -316,7 +319,7 @@ class Moderation(commands.Cog):
         embed.set_footer(text=f"ID: {target.id}")
         await channel.send(embed=embed)
 
-    @commands.command(name="setmodlog")
+    @commands.hybrid_command(name="setmodlog")
     @commands.has_permissions(administrator=True)
     async def setmodlog(self, ctx, channel: discord.TextChannel):
         cfg = load_json("data/config.json")

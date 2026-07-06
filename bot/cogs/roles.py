@@ -17,7 +17,7 @@ class ReactionRoles(commands.Cog):
 
     # ─── REACTION ROLES ───────────────────────────────────────────────────────
 
-    @commands.command(name="reactionrole", aliases=["rr", "rrole"])
+    @commands.hybrid_command(name="reactionrole", aliases=["rr", "rrole"])
     @commands.has_permissions(manage_roles=True)
     async def reactionrole(self, ctx, message_id: int, emoji: str, role: discord.Role):
         """Add a reaction role to a message."""
@@ -42,7 +42,7 @@ class ReactionRoles(commands.Cog):
 
         await ctx.send(embed=make_embed(f"✅ Reaction role added!\n{emoji} → {role.mention}", self.bot.success_color))
 
-    @commands.command(name="rrremove")
+    @commands.hybrid_command(name="rrremove")
     @commands.has_permissions(manage_roles=True)
     async def rrremove(self, ctx, message_id: int, emoji: str = None):
         """Remove reaction role(s) from a message."""
@@ -64,7 +64,7 @@ class ReactionRoles(commands.Cog):
             save_json(RR_FILE, data)
             await ctx.send(embed=make_embed("✅ Removed all reaction roles for that message.", self.bot.success_color))
 
-    @commands.command(name="rrlist")
+    @commands.hybrid_command(name="rrlist")
     @commands.has_permissions(manage_roles=True)
     async def rrlist(self, ctx):
         """List all reaction roles for this server."""
@@ -130,7 +130,7 @@ class ReactionRoles(commands.Cog):
 
     # ─── PANEL REACTION ROLE ──────────────────────────────────────────────────
 
-    @commands.command(name="rrpanel")
+    @commands.hybrid_command(name="rrpanel")
     @commands.has_permissions(manage_roles=True)
     async def rrpanel(self, ctx, channel: discord.TextChannel = None, *, title: str = "🎭 Role Selection"):
         """Create an interactive reaction role panel via prompt."""
@@ -202,7 +202,7 @@ class ReactionRoles(commands.Cog):
 
     # ─── MASS ROLE ────────────────────────────────────────────────────────────
 
-    @commands.command(name="massrole")
+    @commands.hybrid_command(name="massrole")
     @commands.has_permissions(administrator=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def massrole(self, ctx, role: discord.Role, target: str = "humans"):
@@ -233,7 +233,7 @@ class ReactionRoles(commands.Cog):
             self.bot.success_color
         ))
 
-    @commands.command(name="massunrole")
+    @commands.hybrid_command(name="massunrole")
     @commands.has_permissions(administrator=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def massunrole(self, ctx, role: discord.Role, target: str = "humans"):
@@ -262,7 +262,7 @@ class ReactionRoles(commands.Cog):
 
     # ─── TEMP ROLE ────────────────────────────────────────────────────────────
 
-    @commands.command(name="temprole")
+    @commands.hybrid_command(name="temprole")
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def temprole(self, ctx, member: discord.Member, duration: str, role: discord.Role, *, reason: str = "Temp role"):
@@ -288,7 +288,7 @@ class ReactionRoles(commands.Cog):
 
     # ─── ROLE INFO ────────────────────────────────────────────────────────────
 
-    @commands.command(name="rolecolor", aliases=["rc"])
+    @commands.hybrid_command(name="rolecolor", aliases=["rc"])
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def rolecolor(self, ctx, role: discord.Role, color: str):
@@ -304,7 +304,7 @@ class ReactionRoles(commands.Cog):
         except ValueError:
             await ctx.send(embed=make_embed("❌ Invalid color hex.", self.bot.error_color))
 
-    @commands.command(name="rolename")
+    @commands.hybrid_command(name="rolename")
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def rolename(self, ctx, role: discord.Role, *, new_name: str):
@@ -313,7 +313,7 @@ class ReactionRoles(commands.Cog):
         await role.edit(name=new_name)
         await ctx.send(embed=make_embed(f"✅ Renamed `{old_name}` → `{new_name}`", self.bot.success_color))
 
-    @commands.command(name="createrole")
+    @commands.hybrid_command(name="createrole")
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def createrole(self, ctx, *, name: str):
@@ -321,7 +321,7 @@ class ReactionRoles(commands.Cog):
         role = await ctx.guild.create_role(name=name, reason=f"Created by {ctx.author}")
         await ctx.send(embed=make_embed(f"✅ Created role {role.mention}", self.bot.success_color))
 
-    @commands.command(name="delrole")
+    @commands.hybrid_command(name="delrole")
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def delrole(self, ctx, role: discord.Role):

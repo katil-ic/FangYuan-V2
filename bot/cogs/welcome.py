@@ -111,7 +111,7 @@ class Welcome(commands.Cog):
 
     # ─── SETUP COMMANDS ───────────────────────────────────────────────────────
 
-    @commands.group(name="welcome", invoke_without_command=True)
+    @commands.hybrid_group(name="welcome", invoke_without_command=True)
     @commands.has_permissions(manage_guild=True)
     async def welcome_group(self, ctx):
         cfg = load_json(WELCOME_FILE)
@@ -195,7 +195,7 @@ class Welcome(commands.Cog):
 
     # ─── LEAVE ────────────────────────────────────────────────────────────────
 
-    @commands.group(name="leave", invoke_without_command=True)
+    @commands.hybrid_group(name="leave", invoke_without_command=True)
     @commands.has_permissions(manage_guild=True)
     async def leave_group(self, ctx):
         await ctx.send(embed=make_embed("Use subcommands: `setchannel`, `setmessage`, `settitle`, `enable`, `disable`, `test`", 0x5865F2))
@@ -232,7 +232,7 @@ class Welcome(commands.Cog):
 
     # ─── AUTO-ROLE ────────────────────────────────────────────────────────────
 
-    @commands.group(name="autorole", invoke_without_command=True)
+    @commands.hybrid_group(name="autorole", invoke_without_command=True)
     @commands.has_permissions(manage_roles=True)
     async def autorole_group(self, ctx):
         cfg = load_json(WELCOME_FILE)
@@ -272,7 +272,7 @@ class Welcome(commands.Cog):
 
     # ─── DM WELCOME ───────────────────────────────────────────────────────────
 
-    @commands.group(name="dmwelcome", invoke_without_command=True)
+    @commands.hybrid_group(name="dmwelcome", invoke_without_command=True)
     @commands.has_permissions(manage_guild=True)
     async def dmwelcome_group(self, ctx):
         await ctx.send(embed=make_embed("Use: `!dmwelcome set <message>`, `!dmwelcome enable`, `!dmwelcome disable`", 0x5865F2))
