@@ -11,7 +11,7 @@ from utils.helpers import make_embed, load_json, save_json
 
 POLLS_FILE = "data/polls.json"
 
-POLL_EMOJIS = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+POLL_EMOJIS = ["1<:ownerinfo:1480905030713212938>", "2<:ownerinfo:1480905030713212938>", "3<:ownerinfo:1480905030713212938>", "4<:ownerinfo:1480905030713212938>", "5<:ownerinfo:1480905030713212938>", "6<:ownerinfo:1480905030713212938>", "7<:ownerinfo:1480905030713212938>", "8<:ownerinfo:1480905030713212938>", "9<:ownerinfo:1480905030713212938>", "<:ownerinfo:1480905030713212938>"]
 YES_NO_EMOJIS = {"<a:tick:1523383850749792397>": "Yes", "<:Xieron_stolen_emoji_1774597520:1520895245733204039>": "No"}
 
 
@@ -20,7 +20,7 @@ class PollResultView(discord.ui.View):
         super().__init__(timeout=None)
         self.poll_data = poll_data
 
-    @discord.ui.button(label="📊 Results", style=discord.ButtonStyle.secondary, custom_id="poll:results")
+    @discord.ui.button(label="<a:Poll:1345032786876305438> Results", style=discord.ButtonStyle.secondary, custom_id="poll:results")
     async def show_results(self, interaction: discord.Interaction, button: discord.ui.Button):
         try:
             channel = interaction.guild.get_channel(int(self.poll_data["channel_id"]))
@@ -48,7 +48,7 @@ class PollResultView(discord.ui.View):
             lines.append(f"{e} **{option}**\n`{bar}` {count} votes ({pct:.1f}%)")
 
         embed = discord.Embed(
-            title=f"📊 Poll Results: {self.poll_data.get('question', 'Poll')}",
+            title=f"<a:Poll:1345032786876305438> Poll Results: {self.poll_data.get('question', 'Poll')}",
             description="\n\n".join(lines) or "No votes yet.",
             color=0x5865F2,
             timestamp=datetime.utcnow()
@@ -100,7 +100,7 @@ class Polls(commands.Cog):
         if not options:
             # Yes/No poll
             embed = discord.Embed(
-                title="📊 Poll",
+                title="<a:Poll:1345032786876305438> Poll",
                 description=f"**{question}**\n\n<a:tick:1523383850749792397> Yes\n<:Xieron_stolen_emoji_1774597520:1520895245733204039> No",
                 color=0x5865F2,
                 timestamp=datetime.utcnow()
@@ -118,7 +118,7 @@ class Polls(commands.Cog):
             ends_at = int((datetime.now(timezone.utc) + timedelta(seconds=seconds)).timestamp()) if seconds else None
 
             embed = discord.Embed(
-                title="📊 Poll",
+                title="<a:Poll:1345032786876305438> Poll",
                 description=f"**{question}**\n\n{option_lines}",
                 color=0x5865F2,
                 timestamp=datetime.utcnow()
@@ -129,7 +129,7 @@ class Polls(commands.Cog):
                 footer_text += f" • Ends: {datetime.fromtimestamp(ends_at).strftime('%b %d %H:%M UTC')}"
             embed.set_footer(text=footer_text)
             if ends_at:
-                embed.add_field(name="⏱️ Ends", value=f"<t:{ends_at}:R>", inline=False)
+                embed.add_field(name="<:ownerinfo:1480905030713212938> Ends", value=f"<t:{ends_at}:R>", inline=False)
 
             poll_data = {
                 "question": question,
@@ -197,7 +197,7 @@ class Polls(commands.Cog):
                 lines.append(f"{e} **{option}**\n`{bar}` {count} votes ({pct:.1f}%)")
 
             embed = discord.Embed(
-                title="📊 Poll Ended!",
+                title="<a:Poll:1345032786876305438> Poll Ended!",
                 description=f"**{question}**\n\n" + "\n\n".join(lines),
                 color=0x57F287,
                 timestamp=datetime.utcnow()
@@ -219,7 +219,7 @@ class Polls(commands.Cog):
     async def quickpoll(self, ctx, *, question: str):
         """Create a quick yes/no poll."""
         embed = discord.Embed(
-            title="📊 Quick Poll",
+            title="<a:Poll:1345032786876305438> Quick Poll",
             description=f"**{question}**",
             color=0x5865F2,
             timestamp=datetime.utcnow()
@@ -278,7 +278,7 @@ class Polls(commands.Cog):
             lines.append(f"{e} **{option}**\n`{bar}` {count} votes ({pct:.1f}%)")
 
         embed = discord.Embed(
-            title="📊 Poll Ended!",
+            title="<a:Poll:1345032786876305438> Poll Ended!",
             description=f"**{question}**\n\n" + "\n\n".join(lines),
             color=0x57F287,
             timestamp=datetime.utcnow()
@@ -313,11 +313,11 @@ class Polls(commands.Cog):
         option_lines = "\n".join(f"{emojis[i]} {opt}" for i, opt in enumerate(options))
 
         embed = discord.Embed(
-            title="🗳️ Straw Poll",
+            title="<a:Poll:1345032786876305438> Straw Poll",
             color=0xFEE75C,
             timestamp=datetime.utcnow()
         )
-        embed.add_field(name="❓ Question", value=f"**{question}**", inline=False)
+        embed.add_field(name="<:ownerinfo:1480905030713212938> Question", value=f"**{question}**", inline=False)
         embed.add_field(name="Options", value=option_lines, inline=False)
         embed.set_footer(text=f"React to vote • Created by {ctx.author}")
 

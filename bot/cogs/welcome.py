@@ -100,7 +100,7 @@ class Welcome(commands.Cog):
 
         embed = discord.Embed(
             title=l_cfg.get("title", f"Goodbye from {member.guild.name}"),
-            description=msg or f"**{member}** has left the server. 👋",
+            description=msg or f"**{member}** has left the server. <:waves_roleicon_Jo1nTrX:1480906869089374361>",
             color=int(l_cfg.get("color", "0xED4245"), 16) if isinstance(l_cfg.get("color"), str) else l_cfg.get("color", 0xED4245),
             timestamp=datetime.utcnow()
         )
@@ -241,7 +241,7 @@ class Welcome(commands.Cog):
         if not roles:
             return await ctx.send(embed=make_embed("No auto-roles configured. Use `!autorole add @role`.", 0x5865F2))
         role_mentions = [ctx.guild.get_role(int(r)).mention for r in roles if ctx.guild.get_role(int(r))]
-        embed = discord.Embed(title="🎭 Auto-Roles", description="\n".join(role_mentions) or "None", color=0x5865F2)
+        embed = discord.Embed(title="<:ownerinfo:1480905030713212938> Auto-Roles", description="\n".join(role_mentions) or "None", color=0x5865F2)
         await ctx.send(embed=embed)
 
     @autorole_group.command(name="add")

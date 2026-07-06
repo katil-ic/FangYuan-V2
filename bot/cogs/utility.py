@@ -28,7 +28,7 @@ class Utility(commands.Cog):
             cmd = self.bot.get_command(command_name)
             if not cmd:
                 return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> Command `{command_name}` not found.", self.bot.error_color))
-            embed = discord.Embed(title=f"📖 Command: {cmd.name}", color=0x5865F2)
+            embed = discord.Embed(title=f"<:ownerinfo:1480905030713212938> Command: {cmd.name}", color=0x5865F2)
             embed.add_field(name="Description", value=cmd.help or "No description.", inline=False)
             if cmd.aliases:
                 embed.add_field(name="Aliases", value=", ".join(f"`{a}`" for a in cmd.aliases), inline=False)
@@ -36,7 +36,7 @@ class Utility(commands.Cog):
             return await ctx.send(embed=embed)
 
         embed = discord.Embed(
-            title="📖 FangYuan V2 — Command Menu",
+            title="<:ownerinfo:1480905030713212938> FangYuan V2 — Command Menu",
             description=f"Prefix: `{prefix}` | Use `{prefix}help <command>` for details",
             color=0x5865F2,
             timestamp=datetime.utcnow()
@@ -49,16 +49,16 @@ class Utility(commands.Cog):
                 "warn", "warnings", "clearwarns", "purge", "lock", "unlock",
                 "lockall", "slowmode", "nick", "addrole", "removerole", "nuke"
             ],
-            "🎫 Tickets": [
+            "<a:tickets1:1418334460285419541> Tickets": [
                 "ticketpanel", "ticketsetup", "addtoticket", "removefromticket", "ticketstats"
             ],
             "<a:ri_tada:1523620315325010092> Welcome": [
                 "welcome", "leave", "autorole", "dmwelcome"
             ],
-            "📝 Embeds": [
+            "<:ownerinfo:1480905030713212938> Embeds": [
                 "embed", "embedsend", "embeds", "embedload", "embeddelete", "say", "sayhere", "embedjson"
             ],
-            "🤖 Autoresponder": [
+            "<:ownerinfo:1480905030713212938> Autoresponder": [
                 "ar add", "ar remove", "ar list", "ar enable", "ar disable", "ar info", "ar clear"
             ],
             "<a:Announce:1520896619829002240> Announcements": [
@@ -70,13 +70,13 @@ class Utility(commands.Cog):
             "<a:ri_tada:1523620315325010092> Giveaways": [
                 "gstart", "gend", "greroll", "glist", "gdelete", "ginfo"
             ],
-            "📊 Polls": [
+            "<a:Poll:1345032786876305438> Polls": [
                 "poll", "quickpoll", "endpoll"
             ],
-            "🎭 Roles": [
+            "<:ownerinfo:1480905030713212938> Roles": [
                 "reactionrole", "rrremove", "rrlist", "massrole", "massunrole", "temprole"
             ],
-            "ℹ️ Info": [
+            "ℹ<:ownerinfo:1480905030713212938> Info": [
                 "serverinfo", "userinfo", "roleinfo", "botinfo", "channelinfo", "avatar"
             ],
             "<a:Mod:1520895258118983743> Utility": [
@@ -94,15 +94,15 @@ class Utility(commands.Cog):
     async def ping(self, ctx):
         """Check bot latency."""
         start = time.perf_counter()
-        msg = await ctx.send(embed=make_embed("🏓 Pinging...", 0x5865F2))
+        msg = await ctx.send(embed=make_embed("<:ownerinfo:1480905030713212938> Pinging...", 0x5865F2))
         end = time.perf_counter()
         api_latency = round((end - start) * 1000)
         ws_latency = round(self.bot.latency * 1000)
 
-        embed = discord.Embed(title="🏓 Pong!", color=0x57F287)
+        embed = discord.Embed(title="<:ownerinfo:1480905030713212938> Pong!", color=0x57F287)
         embed.add_field(name="WebSocket", value=f"`{ws_latency}ms`", inline=True)
         embed.add_field(name="API", value=f"`{api_latency}ms`", inline=True)
-        quality = "<a:online:1523383854226870423> Excellent" if ws_latency < 100 else "🟡 Good" if ws_latency < 200 else "🔴 Poor"
+        quality = "<a:online:1523383854226870423> Excellent" if ws_latency < 100 else "<:ownerinfo:1480905030713212938> Good" if ws_latency < 200 else "<:ownerinfo:1480905030713212938> Poor"
         embed.add_field(name="Quality", value=quality, inline=True)
         await msg.edit(embed=embed)
 
@@ -114,7 +114,7 @@ class Utility(commands.Cog):
         h, r = divmod(r, 3600)
         m, s = divmod(r, 60)
         uptime_str = f"{d}d {h}h {m}m {s}s"
-        embed = discord.Embed(title="⏱️ Bot Uptime", description=f"**{uptime_str}**", color=0x5865F2)
+        embed = discord.Embed(title="<:ownerinfo:1480905030713212938> Bot Uptime", description=f"**{uptime_str}**", color=0x5865F2)
         embed.add_field(name="Started At", value=f"<t:{int(START_TIME)}:F>", inline=False)
         await ctx.send(embed=embed)
 
@@ -133,14 +133,14 @@ class Utility(commands.Cog):
 
         fire_at = int(datetime.now(timezone.utc).timestamp()) + seconds
         embed = discord.Embed(
-            title="⏰ Reminder Set",
+            title="<:ownerinfo:1480905030713212938> Reminder Set",
             description=f"I'll remind you: **{reminder}**\nAt: <t:{fire_at}:F> (<t:{fire_at}:R>)",
             color=self.bot.success_color
         )
         await ctx.send(embed=embed)
         await asyncio.sleep(seconds)
         embed2 = discord.Embed(
-            title="⏰ Reminder!",
+            title="<:ownerinfo:1480905030713212938> Reminder!",
             description=f"{ctx.author.mention}, you asked me to remind you:\n\n> **{reminder}**\n\nSet <t:{fire_at - seconds}:R>",
             color=0xFEE75C,
             timestamp=datetime.utcnow()
@@ -209,7 +209,7 @@ class Utility(commands.Cog):
             "time": datetime.now(timezone.utc)
         }
         embed = discord.Embed(
-            description=f"💤 **{ctx.author.display_name}** is now AFK: {reason}",
+            description=f"<:ownerinfo:1480905030713212938> **{ctx.author.display_name}** is now AFK: {reason}",
             color=0xFEE75C
         )
         await ctx.send(embed=embed)
@@ -224,7 +224,7 @@ class Utility(commands.Cog):
         afk_members = {uid: data for uid, data in self._afk_data.items() if ctx.guild.get_member(uid)}
         if not afk_members:
             return await ctx.send(embed=make_embed("No AFK members.", 0x5865F2))
-        embed = discord.Embed(title="💤 AFK Members", color=0xFEE75C)
+        embed = discord.Embed(title="<:ownerinfo:1480905030713212938> AFK Members", color=0xFEE75C)
         for uid, data in afk_members.items():
             member = ctx.guild.get_member(uid)
             delta = datetime.now(timezone.utc) - data["time"]
@@ -241,7 +241,7 @@ class Utility(commands.Cog):
             data = self._afk_data.pop(message.author.id)
             delta = datetime.now(timezone.utc) - data["time"]
             minutes = int(delta.total_seconds() // 60)
-            embed = make_embed(f"👋 Welcome back {message.author.mention}! You were AFK for {minutes}m.", 0x57F287)
+            embed = make_embed(f"<:waves_roleicon_Jo1nTrX:1480906869089374361> Welcome back {message.author.mention}! You were AFK for {minutes}m.", 0x57F287)
             await message.channel.send(embed=embed, delete_after=8)
             try:
                 nick = message.author.display_name
@@ -257,7 +257,7 @@ class Utility(commands.Cog):
                 data = self._afk_data[user.id]
                 delta = datetime.now(timezone.utc) - data["time"]
                 minutes = int(delta.total_seconds() // 60)
-                embed = make_embed(f"💤 **{user.display_name}** is AFK: {data['reason']} ({minutes}m ago)", 0xFEE75C)
+                embed = make_embed(f"<:ownerinfo:1480905030713212938> **{user.display_name}** is AFK: {data['reason']} ({minutes}m ago)", 0xFEE75C)
                 await message.channel.send(embed=embed, delete_after=10)
 
     @commands.hybrid_command(name="inviteinfo", aliases=["invite"])
@@ -267,7 +267,7 @@ class Utility(commands.Cog):
             invites = await ctx.guild.invites()
             if not invites:
                 return await ctx.send(embed=make_embed("No invites for this server.", 0x5865F2))
-            embed = discord.Embed(title=f"📨 Server Invites ({len(invites)})", color=0x5865F2)
+            embed = discord.Embed(title=f"<:ownerinfo:1480905030713212938> Server Invites ({len(invites)})", color=0x5865F2)
             for inv in invites[:10]:
                 embed.add_field(
                     name=f"discord.gg/{inv.code}",
@@ -279,7 +279,7 @@ class Utility(commands.Cog):
         code = code.replace("https://discord.gg/", "").replace("discord.gg/", "")
         try:
             invite = await self.bot.fetch_invite(code, with_counts=True)
-            embed = discord.Embed(title=f"📨 Invite: {code}", color=0x5865F2)
+            embed = discord.Embed(title=f"<:ownerinfo:1480905030713212938> Invite: {code}", color=0x5865F2)
             if invite.guild:
                 embed.add_field(name="Server", value=invite.guild.name, inline=True)
                 embed.add_field(name="Members", value=f"{invite.approximate_member_count:,}", inline=True)
@@ -327,7 +327,7 @@ class Utility(commands.Cog):
         """Convert a date string to Discord timestamps."""
         if not dt_str:
             now = int(datetime.now(timezone.utc).timestamp())
-            embed = discord.Embed(title="🕐 Current Timestamp", color=0x5865F2)
+            embed = discord.Embed(title="<:ownerinfo:1480905030713212938> Current Timestamp", color=0x5865F2)
             embed.add_field(name="Unix", value=f"`{now}`", inline=False)
             embed.add_field(name="Short Time", value=f"<t:{now}:t> → `<t:{now}:t>`", inline=False)
             embed.add_field(name="Long Date/Time", value=f"<t:{now}:F> → `<t:{now}:F>`", inline=False)
@@ -341,7 +341,7 @@ class Utility(commands.Cog):
         except Exception:
             return await ctx.send(embed=make_embed("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Couldn't parse date. Try `2025-01-01 12:00` or `January 1, 2025`.", self.bot.error_color))
 
-        embed = discord.Embed(title="🕐 Timestamp", color=0x5865F2)
+        embed = discord.Embed(title="<:ownerinfo:1480905030713212938> Timestamp", color=0x5865F2)
         embed.add_field(name="Unix", value=f"`{ts}`", inline=False)
         embed.add_field(name="Short Time", value=f"<t:{ts}:t> → `<t:{ts}:t>`", inline=True)
         embed.add_field(name="Short Date", value=f"<t:{ts}:d> → `<t:{ts}:d>`", inline=True)

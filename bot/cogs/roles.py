@@ -75,7 +75,7 @@ class ReactionRoles(commands.Cog):
         if not guild_data:
             return await ctx.send(embed=make_embed("No reaction roles configured.", 0x5865F2))
 
-        embed = discord.Embed(title="🎭 Reaction Roles", color=0x5865F2)
+        embed = discord.Embed(title="<:ownerinfo:1480905030713212938> Reaction Roles", color=0x5865F2)
         for msg_id, emojis in guild_data.items():
             lines = []
             for emoji, role_id in emojis.items():
@@ -132,13 +132,13 @@ class ReactionRoles(commands.Cog):
 
     @commands.hybrid_command(name="rrpanel")
     @commands.has_permissions(manage_roles=True)
-    async def rrpanel(self, ctx, channel: discord.TextChannel = None, *, title: str = "🎭 Role Selection"):
+    async def rrpanel(self, ctx, channel: discord.TextChannel = None, *, title: str = "<:ownerinfo:1480905030713212938> Role Selection"):
         """Create an interactive reaction role panel via prompt."""
         channel = channel or ctx.channel
         await ctx.send(embed=make_embed(
             "I'll walk you through creating a reaction role panel.\n"
             "Enter pairs of `emoji role` (one per line), then send `done` when finished.\n"
-            "Example:\n`🎮 @Gamer`\n`🎵 @Music`",
+            "Example:\n`<:ownerinfo:1480905030713212938> @Gamer`\n`<:ownerinfo:1480905030713212938> @Music`",
             0x5865F2
         ))
 
@@ -217,7 +217,7 @@ class ReactionRoles(commands.Cog):
         else:
             members = ctx.guild.members
 
-        msg = await ctx.send(embed=make_embed(f"⏳ Adding {role.mention} to {len(members)} member(s)...", 0x5865F2))
+        msg = await ctx.send(embed=make_embed(f"<:ownerinfo:1480905030713212938> Adding {role.mention} to {len(members)} member(s)...", 0x5865F2))
         success, failed = 0, 0
         for member in members:
             try:
@@ -245,7 +245,7 @@ class ReactionRoles(commands.Cog):
         else:
             members = [m for m in ctx.guild.members if role in m.roles]
 
-        msg = await ctx.send(embed=make_embed(f"⏳ Removing {role.mention} from {len(members)} member(s)...", 0x5865F2))
+        msg = await ctx.send(embed=make_embed(f"<:ownerinfo:1480905030713212938> Removing {role.mention} from {len(members)} member(s)...", 0x5865F2))
         success, failed = 0, 0
         for member in members:
             try:

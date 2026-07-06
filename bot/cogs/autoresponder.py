@@ -193,11 +193,11 @@ class Autoresponder(commands.Cog):
         if not rules:
             return await ctx.send(embed=make_embed("No autoresponders configured. Use `!ar add <trigger> <response>`.", 0x5865F2))
 
-        embed = discord.Embed(title=f"🤖 Autoresponders ({len(rules)})", color=0x5865F2)
+        embed = discord.Embed(title=f"<:ownerinfo:1480905030713212938> Autoresponders ({len(rules)})", color=0x5865F2)
         lines = []
         for i, r in enumerate(rules, 1):
             status = "<a:tick:1523383850749792397>" if r.get("enabled", True) else "<:Xieron_stolen_emoji_1774597520:1520895245733204039>"
-            match_icon = {"exact": "🎯", "startswith": "⬅️", "endswith": "<a:pink_arrow_haveli:1523620310124068985>", "regex": "🔣", "contains": "🔍"}.get(r.get("match_type", "contains"), "🔍")
+            match_icon = {"exact": "<:ownerinfo:1480905030713212938>", "startswith": "⬅<:ownerinfo:1480905030713212938>", "endswith": "<a:pink_arrow_haveli:1523620310124068985>", "regex": "<:ownerinfo:1480905030713212938>", "contains": "<:ownerinfo:1480905030713212938>"}.get(r.get("match_type", "contains"), "<:ownerinfo:1480905030713212938>")
             lines.append(f"{status} `#{i}` {match_icon} **{r['trigger']}** → {r['response'][:50]}")
         embed.description = "\n".join(lines)
         embed.set_footer(text="!ar add/remove/enable/disable/info")
@@ -279,7 +279,7 @@ class Autoresponder(commands.Cog):
         rule = next((r for r in data.get(guild_id, []) if r["trigger"].lower() == trigger.lower()), None)
         if not rule:
             return await ctx.send(embed=make_embed(f"<:Xieron_stolen_emoji_1774597520:1520895245733204039> No rule for `{trigger}`.", self.bot.error_color))
-        embed = discord.Embed(title=f"📋 Autoresponder: {rule['trigger']}", color=0x5865F2)
+        embed = discord.Embed(title=f"<:ownerinfo:1480905030713212938> Autoresponder: {rule['trigger']}", color=0x5865F2)
         embed.add_field(name="Trigger", value=f"`{rule['trigger']}`", inline=True)
         embed.add_field(name="Match Type", value=rule.get("match_type", "contains"), inline=True)
         embed.add_field(name="Enabled", value="<a:tick:1523383850749792397>" if rule.get("enabled", True) else "<:Xieron_stolen_emoji_1774597520:1520895245733204039>", inline=True)

@@ -22,7 +22,7 @@ class EmbedBuilder(discord.ui.View):
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
         return interaction.user == self.ctx.author
 
-    @discord.ui.button(label="Set Title", style=discord.ButtonStyle.primary, emoji="📝")
+    @discord.ui.button(label="Set Title", style=discord.ButtonStyle.primary, emoji="<:ownerinfo:1480905030713212938>")
     async def set_title(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Enter the **title** for the embed:", ephemeral=True)
         msg = await self.ctx.bot.wait_for("message", check=lambda m: m.author == self.ctx.author and m.channel == self.ctx.channel, timeout=60)
@@ -30,7 +30,7 @@ class EmbedBuilder(discord.ui.View):
         await msg.delete()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="Set Description", style=discord.ButtonStyle.primary, emoji="📄")
+    @discord.ui.button(label="Set Description", style=discord.ButtonStyle.primary, emoji="<:ownerinfo:1480905030713212938>")
     async def set_description(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Enter the **description** (supports markdown, use \\n for newlines):", ephemeral=True)
         msg = await self.ctx.bot.wait_for("message", check=lambda m: m.author == self.ctx.author and m.channel == self.ctx.channel, timeout=120)
@@ -38,7 +38,7 @@ class EmbedBuilder(discord.ui.View):
         await msg.delete()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="Set Color", style=discord.ButtonStyle.primary, emoji="🎨")
+    @discord.ui.button(label="Set Color", style=discord.ButtonStyle.primary, emoji="<:ownerinfo:1480905030713212938>")
     async def set_color(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Enter a **hex color** (e.g. `#5865F2`):", ephemeral=True)
         msg = await self.ctx.bot.wait_for("message", check=lambda m: m.author == self.ctx.author and m.channel == self.ctx.channel, timeout=60)
@@ -62,12 +62,12 @@ class EmbedBuilder(discord.ui.View):
         await msg.delete()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="Clear Fields", style=discord.ButtonStyle.secondary, emoji="🗑️")
+    @discord.ui.button(label="Clear Fields", style=discord.ButtonStyle.secondary, emoji="<:ownerinfo:1480905030713212938>")
     async def clear_fields(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.embed.clear_fields()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="Set Image", style=discord.ButtonStyle.secondary, emoji="🖼️")
+    @discord.ui.button(label="Set Image", style=discord.ButtonStyle.secondary, emoji="<:ownerinfo:1480905030713212938>")
     async def set_image(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Enter the **image URL** (or `none` to remove):", ephemeral=True)
         msg = await self.ctx.bot.wait_for("message", check=lambda m: m.author == self.ctx.author and m.channel == self.ctx.channel, timeout=60)
@@ -78,7 +78,7 @@ class EmbedBuilder(discord.ui.View):
         await msg.delete()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="Set Thumbnail", style=discord.ButtonStyle.secondary, emoji="🖼️")
+    @discord.ui.button(label="Set Thumbnail", style=discord.ButtonStyle.secondary, emoji="<:ownerinfo:1480905030713212938>")
     async def set_thumbnail(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Enter the **thumbnail URL** (or `none` to remove):", ephemeral=True)
         msg = await self.ctx.bot.wait_for("message", check=lambda m: m.author == self.ctx.author and m.channel == self.ctx.channel, timeout=60)
@@ -89,7 +89,7 @@ class EmbedBuilder(discord.ui.View):
         await msg.delete()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="Set Footer", style=discord.ButtonStyle.secondary, emoji="📌")
+    @discord.ui.button(label="Set Footer", style=discord.ButtonStyle.secondary, emoji="<:ownerinfo:1480905030713212938>")
     async def set_footer(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Enter the **footer text** (optionally `text | icon_url`):", ephemeral=True)
         msg = await self.ctx.bot.wait_for("message", check=lambda m: m.author == self.ctx.author and m.channel == self.ctx.channel, timeout=60)
@@ -112,7 +112,7 @@ class EmbedBuilder(discord.ui.View):
         await msg.delete()
         await self._refresh(interaction)
 
-    @discord.ui.button(label="Toggle Timestamp", style=discord.ButtonStyle.secondary, emoji="🕐")
+    @discord.ui.button(label="Toggle Timestamp", style=discord.ButtonStyle.secondary, emoji="<:ownerinfo:1480905030713212938>")
     async def toggle_timestamp(self, interaction: discord.Interaction, button: discord.ui.Button):
         if self.embed.timestamp:
             self.embed.timestamp = discord.Embed.Empty
@@ -129,7 +129,7 @@ class EmbedBuilder(discord.ui.View):
         await msg.delete()
         await interaction.followup.send(f"<a:tick:1523383850749792397> Target channel set to {self.target_channel.mention}", ephemeral=True)
 
-    @discord.ui.button(label="<a:tick:1523383850749792397> Send", style=discord.ButtonStyle.success, emoji="🚀")
+    @discord.ui.button(label="<a:tick:1523383850749792397> Send", style=discord.ButtonStyle.success, emoji="<:ownerinfo:1480905030713212938>")
     async def send_embed(self, interaction: discord.Interaction, button: discord.ui.Button):
         if not self.embed.title and not self.embed.description:
             return await interaction.response.send_message("<:Xieron_stolen_emoji_1774597520:1520895245733204039> Add a title or description first.", ephemeral=True)
@@ -137,7 +137,7 @@ class EmbedBuilder(discord.ui.View):
         await interaction.response.send_message(f"<a:tick:1523383850749792397> Embed sent to {self.target_channel.mention}!", ephemeral=True)
         self.stop()
 
-    @discord.ui.button(label="💾 Save", style=discord.ButtonStyle.success, emoji="💾")
+    @discord.ui.button(label="<:ownerinfo:1480905030713212938> Save", style=discord.ButtonStyle.success, emoji="<:ownerinfo:1480905030713212938>")
     async def save_embed(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Enter a **name** to save this embed as:", ephemeral=True)
         msg = await self.ctx.bot.wait_for("message", check=lambda m: m.author == self.ctx.author and m.channel == self.ctx.channel, timeout=30)
@@ -180,7 +180,7 @@ class Embeds(commands.Cog):
     async def embed_command(self, ctx):
         """Open the interactive embed builder."""
         embed = discord.Embed(
-            title="📝 Embed Preview",
+            title="<:ownerinfo:1480905030713212938> Embed Preview",
             description="Use the buttons below to customize this embed, then send it.",
             color=0x5865F2
         )
@@ -214,7 +214,7 @@ class Embeds(commands.Cog):
         embeds = saved.get(guild_id, {})
         if not embeds:
             return await ctx.send(embed=make_embed("No saved embeds. Use `!embed` to build and save one.", 0x5865F2))
-        embed = discord.Embed(title="💾 Saved Embeds", color=0x5865F2)
+        embed = discord.Embed(title="<:ownerinfo:1480905030713212938> Saved Embeds", color=0x5865F2)
         embed.description = "\n".join(f"• `{name}` — !embedload {name}" for name in embeds.keys())
         await ctx.send(embed=embed)
 

@@ -322,7 +322,7 @@ class Giveaway(commands.Cog):
         winner_text = " ".join(f"<@{w}>" for w in winners)
 
         embed = discord.Embed(
-            title="🔄 Giveaway Rerolled!",
+            title="<:ownerinfo:1480905030713212938> Giveaway Rerolled!",
             description=f"New winner(s): {winner_text}\n\nPrize: **{ga['prize']}**",
             color=0x5865F2,
             timestamp=datetime.utcnow()
